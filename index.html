@@ -3,113 +3,139 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#07111f">
+<meta name="theme-color" content="#06101d">
 <title>Zeus Companion</title>
-<script src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
 <style>
-:root{--text:#f5f8ff;--line:rgba(255,255,255,.11);--blue:#7dceff;--ok:#62e6a5}
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#020812;color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-body{background:radial-gradient(circle at 50% 38%,#133b68 0,#071524 44%,#020812 82%)}
-.app{position:relative;width:100%;height:100dvh;min-height:100vh;overflow:hidden}.viewer{position:absolute;inset:0}.viewer iframe{width:100%;height:100%;border:0;display:block;background:transparent}
-.top{position:absolute;z-index:5;left:max(14px,env(safe-area-inset-left));right:max(14px,env(safe-area-inset-right));top:max(16px,env(safe-area-inset-top));display:flex;align-items:center;justify-content:space-between;pointer-events:none}.brand{display:flex;align-items:center;gap:12px}.logo{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(145deg,#a6e8ff,#5e96ff);color:#06101c;font-size:31px;font-weight:900;box-shadow:0 12px 32px #0007}.title{font-size:clamp(1.25rem,5vw,1.8rem);font-weight:800;text-shadow:0 2px 15px #000}.motion{border:1px solid var(--line);border-radius:999px;background:#07111ed9;padding:9px 12px;font-size:.78rem;backdrop-filter:blur(12px)}.motion.ok{color:#9bf2c2;border-color:#62e6a555}.motion.bad{color:#ffd083;border-color:#ffd08355}
-.loading{position:absolute;z-index:6;left:50%;top:48%;transform:translate(-50%,-50%);padding:9px 13px;border-radius:999px;border:1px solid var(--line);background:#07111ee8;color:#d8ecff;font-size:.8rem;pointer-events:none}
-.controls{position:absolute;z-index:5;left:50%;bottom:max(22px,calc(env(safe-area-inset-bottom) + 16px));transform:translateX(-50%);display:flex;gap:7px;padding:8px;border-radius:23px;border:1px solid var(--line);background:#07111edc;backdrop-filter:blur(18px);box-shadow:0 18px 45px #0008}.controls button{border:1px solid var(--line);border-radius:16px;background:#ffffff08;color:var(--text);padding:11px 15px;font-size:.93rem;white-space:nowrap}.controls button.active{background:#62b8ff24;border-color:#7dceffaa;box-shadow:inset 0 0 18px #5dafff16}.hint{position:absolute;z-index:4;left:50%;bottom:102px;transform:translateX(-50%);font-size:.72rem;color:#91a9c2;background:#06101cab;border:1px solid var(--line);padding:6px 10px;border-radius:999px;pointer-events:none;opacity:.9}
-@media(max-width:560px){.logo{width:52px;height:52px}.title{font-size:1.35rem}.motion{font-size:.72rem;padding:8px 10px}.controls{gap:5px;padding:7px;max-width:calc(100vw - 18px)}.controls button{font-size:.82rem;padding:10px 11px}.hint{bottom:96px}}
+:root{--text:#f4f8ff;--muted:#9db2cb;--line:rgba(255,255,255,.11);--blue:#81d3ff;--ok:#67e7aa}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text);background:#020812}
+body{background:radial-gradient(circle at 50% 38%,#173f6d 0,#071524 45%,#020812 82%)}
+.app{position:relative;width:100%;height:100dvh;min-height:100vh;overflow:hidden}.viewer{position:absolute;inset:0;touch-action:none}.viewer canvas{display:block;width:100%;height:100%}
+.top{position:absolute;z-index:5;left:max(14px,env(safe-area-inset-left));right:max(14px,env(safe-area-inset-right));top:max(15px,env(safe-area-inset-top));display:flex;align-items:center;justify-content:space-between;pointer-events:none}.brand{display:flex;align-items:center;gap:11px}.logo{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(145deg,#a7e8ff,#609bff);color:#07111e;font-size:30px;font-weight:900;box-shadow:0 12px 32px #0007}.title{font-size:clamp(1.2rem,5vw,1.7rem);font-weight:850;text-shadow:0 2px 14px #000}.status{border:1px solid var(--line);border-radius:999px;padding:8px 11px;background:#07111edb;font-size:.73rem;color:#a9bed4;backdrop-filter:blur(14px)}.status.ok{color:#9af0bf;border-color:#67e7aa55}
+.loading{position:absolute;z-index:6;left:50%;top:50%;transform:translate(-50%,-50%);padding:10px 14px;border:1px solid var(--line);border-radius:999px;background:#07111ee8;color:#d9ecff;font-size:.8rem}
+.state-note{position:absolute;z-index:5;left:50%;bottom:102px;transform:translateX(-50%);padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:#07111ed7;color:#9db2cb;font-size:.71rem;white-space:nowrap;pointer-events:none}
+.controls{position:absolute;z-index:5;left:50%;bottom:max(18px,calc(env(safe-area-inset-bottom) + 12px));transform:translateX(-50%);display:flex;gap:6px;padding:7px;border:1px solid var(--line);border-radius:22px;background:#07111edc;backdrop-filter:blur(18px);box-shadow:0 18px 45px #0009}.controls button{border:1px solid var(--line);border-radius:15px;background:#ffffff08;color:var(--text);padding:10px 13px;font-size:.88rem;white-space:nowrap;cursor:pointer}.controls button.active{background:#61b5ff25;border-color:#81d3ffaa;box-shadow:inset 0 0 18px #5dafff15}
+.credit{position:absolute;z-index:4;left:max(12px,env(safe-area-inset-left));bottom:max(14px,env(safe-area-inset-bottom));font-size:.61rem;color:#6f8499;pointer-events:none}.credit a{color:#88bfe7}
+@media(max-width:560px){.logo{width:48px;height:48px}.title{font-size:1.25rem}.status{font-size:.68rem}.controls{gap:4px;max-width:calc(100vw - 14px)}.controls button{font-size:.79rem;padding:9px 10px}.state-note{bottom:94px}.credit{display:none}}
 </style>
 </head>
 <body>
-<div class="app" id="app" data-state="idle">
-  <div class="viewer"><iframe id="api-frame" title="Zeus 3D" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen></iframe></div>
-  <div class="top"><div class="brand"><div class="logo">ϟ</div><div class="title">Zeus Companion</div></div><div class="motion" id="motion">Laddar rigg…</div></div>
-  <div class="loading" id="loading">Laddar Zeus + skelett…</div>
-  <div class="hint" id="hint">Idle · originalanimation</div>
+<div class="app">
+  <div class="viewer" id="viewer"><canvas id="canvas"></canvas></div>
+  <div class="top"><div class="brand"><div class="logo">ϟ</div><div class="title">Zeus Companion</div></div><div class="status" id="status">Laddar 3D…</div></div>
+  <div class="loading" id="loading">Laddar Zeus direkt…</div>
+  <div class="state-note" id="stateNote">Idle · originalrörelse</div>
   <div class="controls">
     <button class="active" data-state="idle">😌 Idle</button>
     <button data-state="listening">👂 Lyssnar</button>
     <button data-state="thinking">🤔 Tänker</button>
     <button data-state="speaking">🗣️ Pratar</button>
   </div>
+  <div class="credit">Zeus Idle · SomeDude / Patyot.Suttipreecha · CC Attribution</div>
 </div>
-<script>
-const UID='ed4308bda4604effb798d107c910ce37';
-const frame=document.getElementById('api-frame');
-const client=new Sketchfab('1.12.1',frame);
-const loading=document.getElementById('loading');
-const motion=document.getElementById('motion');
-const hint=document.getElementById('hint');
-const buttons=[...document.querySelectorAll('.controls button')];
-let api=null,animUID=null,duration=1.6,state='idle',baseCamera=null,verifyTimer=null,poseTimer=null,poseTick=0;
-let rigReady=false;
-const nodeIds={},baseMatrices={};
-const wanted=['Spine_01','Chest_02','Head_03','Shoulder.L_05','Elbow.L_06','Wrist.L_07','Shoulder.R_017','Elbow.R_018','Wrist.R_019'];
-const labels={idle:'Idle · originalanimation',listening:'Lyssnar · egen huvud/kroppsrörelse',thinking:'Tänker · egen tänkarpose',speaking:'Pratar · egna arm- och huvudgester'};
+<script type="module">
+import * as THREE from 'https://esm.sh/three@0.180.0';
+import {GLTFLoader} from 'https://esm.sh/three@0.180.0/examples/jsm/loaders/GLTFLoader.js';
+import {gunzipSync} from 'https://esm.sh/fflate@0.8.2';
 
-function mul(a,b){const o=new Array(16);for(let c=0;c<4;c++)for(let r=0;r<4;r++){o[c*4+r]=0;for(let k=0;k<4;k++)o[c*4+r]+=a[k*4+r]*b[c*4+k]}return o}
-function rx(a){const c=Math.cos(a),s=Math.sin(a);return[1,0,0,0,0,c,s,0,0,-s,c,0,0,0,0,1]}
-function ry(a){const c=Math.cos(a),s=Math.sin(a);return[c,0,-s,0,0,1,0,0,s,0,c,0,0,0,0,1]}
-function rz(a){const c=Math.cos(a),s=Math.sin(a);return[c,s,0,0,-s,c,0,0,0,0,1,0,0,0,0,1]}
-function posed(name,x=0,y=0,z=0){const b=baseMatrices[name];if(!b||!nodeIds[name])return null;return mul(b,mul(rz(z),mul(ry(y),rx(x))))}
-function setBone(name,x=0,y=0,z=0,cb){const m=posed(name,x,y,z);if(!m)return;api.setMatrix(nodeIds[name],m,cb)}
-function restoreRig(){for(const n of wanted)if(nodeIds[n]&&baseMatrices[n])api.setMatrix(nodeIds[n],baseMatrices[n])}
-function stopPose(){if(poseTimer)clearInterval(poseTimer);poseTimer=null;poseTick=0}
+const canvas=document.getElementById('canvas'),viewer=document.getElementById('viewer'),loading=document.getElementById('loading'),status=document.getElementById('status'),stateNote=document.getElementById('stateNote'),buttons=[...document.querySelectorAll('.controls button')];
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'high-performance'});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.14;
+const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(30,1,.01,100);
+scene.add(new THREE.HemisphereLight(0xf1f9ff,0x13213a,2.6));
+const key=new THREE.DirectionalLight(0xffffff,3.1);key.position.set(4,7,7);scene.add(key);
+const fill=new THREE.PointLight(0x67caff,11,20);fill.position.set(-4,3,5);scene.add(fill);
+const rim=new THREE.PointLight(0xffd3b8,6,18);rim.position.set(4,2,-3);scene.add(rim);
+const floor=new THREE.Mesh(new THREE.CircleGeometry(2.5,72),new THREE.MeshBasicMaterial({color:0x57baff,transparent:true,opacity:.08,depthWrite:false}));floor.rotation.x=-Math.PI/2;scene.add(floor);
 
-function hidePlane(done){api.getNodeMap((err,nodes)=>{if(err||!nodes){done();return}const vals=Object.values(nodes),planes=vals.filter(n=>String(n.name||'').toLowerCase().includes('plane'));if(!planes.length){done();return}let left=planes.length;planes.forEach(n=>api.hide(n.instanceID,()=>{if(--left===0)done()}))})}
-function whiteHair(){api.getMaterialList((err,mats)=>{if(err||!mats)return;const hair=mats.find(m=>String(m.name||'').toLowerCase().includes('hair'));if(!hair)return;const m=JSON.parse(JSON.stringify(hair));for(const k of ['AlbedoPBR','DiffusePBR','DiffuseColor'])if(m.channels&&m.channels[k]){m.channels[k].enable=true;m.channels[k].color=[1,1,1];m.channels[k].texture=null}api.setMaterial(m)})}
-function frameVisible(){api.setEnableCameraConstraints(false);api.focusOnVisibleGeometries(err=>{if(err)return;api.getCameraLookAt((e,c)=>{if(e||!c)return;const p=c.position,t=c.target,dx=p[0]-t[0],dy=p[1]-t[1],dz=p[2]-t[2],close=.48;baseCamera={position:[t[0]+dx*close,t[1]+dy*close,t[2]+dz*close],target:[...t]};api.setCameraLookAt(baseCamera.position,baseCamera.target,0)})})}
-function applyCamera(s){if(!baseCamera)return;const p=baseCamera.position,t=baseCamera.target,dx=p[0]-t[0],dy=p[1]-t[1],dz=p[2]-t[2];const z=s==='listening'?.94:s==='speaking'?.92:1;api.setCameraLookAt([t[0]+dx*z,t[1]+dy*z,t[2]+dz*z],t,.22)}
+let model,mixer,action,state='idle',userYaw=0,drag=false,lastX=0;
+const bones={},baseQ={};
+const labels={idle:'Idle · originalrörelse',listening:'Lyssnar · lutar sig fram och lyssnar',thinking:'Tänker · hand mot ansiktet',speaking:'Pratar · tydliga armgester'};
 
-function playIdle(){stopPose();restoreRig();if(!api||!animUID)return;api.setCurrentAnimationByUID(animUID,err=>{if(err){motion.textContent='Animationsfel';motion.className='motion bad';return}api.setCycleMode('loopOne',()=>api.setSpeed(.92,()=>api.seekTo(0,()=>{api.play();setTimeout(verifyIdle,180)})))})}
-function verifyIdle(){if(!api||!animUID||state!=='idle')return;clearTimeout(verifyTimer);api.getCurrentTime((e,t1)=>{if(e)return;verifyTimer=setTimeout(()=>api.getCurrentTime((e2,t2)=>{if(e2||state!=='idle')return;let d=t2-t1;if(d<0)d+=duration;if(d>.04){motion.textContent='Idle-rörelse ✓';motion.className='motion ok'}else{motion.textContent='Startar om idle…';motion.className='motion bad';playIdle()} }),650)})}
+function resize(){const r=viewer.getBoundingClientRect(),w=Math.max(1,r.width),h=Math.max(1,r.height);renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();}
+new ResizeObserver(()=>{resize();if(model)fitCamera();}).observe(viewer);
 
-function startManual(s){stopPose();clearTimeout(verifyTimer);api.pause();api.seekTo(0,()=>{restoreRig();setTimeout(()=>{
-  let first=true;
-  const step=()=>{
-    if(state!==s)return;poseTick++;const t=poseTick*.11;
-    if(s==='listening'){
-      setBone('Spine_01',-.07+Math.sin(t*.7)*.018,0,0);
-      setBone('Chest_02',-.10+Math.sin(t*.8)*.025,0,0);
-      setBone('Head_03',-.04+Math.sin(t*.9)*.025,Math.sin(t*.55)*.15,.07);
-      setBone('Shoulder.L_05',0,0,.05+Math.sin(t*.8)*.025);
-      setBone('Shoulder.R_017',0,0,-.05-Math.sin(t*.8)*.025);
-    } else if(s==='thinking'){
-      setBone('Chest_02',-.05,.08,0);
-      setBone('Head_03',-.24+Math.sin(t*.45)*.018,.20,.10);
-      setBone('Shoulder.R_017',-.35,.10,-.62);
-      setBone('Elbow.R_018',-.05,.15,-1.00+Math.sin(t*.45)*.04);
-      setBone('Wrist.R_019',0,.15,-.18);
-      setBone('Shoulder.L_05',0,0,.10);
-    } else if(s==='speaking'){
-      const a=Math.sin(t*2.0),b=Math.sin(t*2.0+Math.PI);
-      setBone('Spine_01',0,Math.sin(t*.9)*.055,0);
-      setBone('Chest_02',Math.sin(t*1.3)*.035,Math.sin(t*.8)*.06,0);
-      setBone('Head_03',Math.sin(t*1.8)*.06,Math.sin(t*1.15)*.13,Math.sin(t*.7)*.035);
-      setBone('Shoulder.L_05',-.12,0,.28+a*.18);
-      setBone('Elbow.L_06',0,0,.38+b*.28);
-      setBone('Shoulder.R_017',-.12,0,-.28-b*.18);
-      setBone('Elbow.R_018',0,0,-.38-a*.28);
-    }
-    if(first){first=false;const probe=posed('Head_03',0,.02,0);if(probe&&nodeIds['Head_03'])api.setMatrix(nodeIds['Head_03'],probe,err=>{if(err){motion.textContent='Riggrörelse kunde inte styras';motion.className='motion bad'}else{motion.textContent=(s==='listening'?'Lyssnar':'thinking'===s?'Tänker':'Pratar')+'-rörelse ✓';motion.className='motion ok'}})}
-  };
-  step();poseTimer=setInterval(step,s==='speaking'?80:110);
-},80)})}
-
-function setState(s){state=s;hint.textContent=labels[s];buttons.forEach(b=>b.classList.toggle('active',b.dataset.state===s));applyCamera(s);if(s==='idle')playIdle();else if(rigReady)startManual(s);else{motion.textContent='Rigg laddas…';motion.className='motion bad'}}
+function fitCamera(){
+ if(!model)return;
+ model.updateMatrixWorld(true);
+ const box=new THREE.Box3().setFromObject(model),size=box.getSize(new THREE.Vector3()),center=box.getCenter(new THREE.Vector3());
+ model.position.sub(center);model.updateMatrixWorld(true);
+ const vf=THREE.MathUtils.degToRad(camera.fov),hf=2*Math.atan(Math.tan(vf/2)*camera.aspect);
+ const dv=(size.y/2)/Math.tan(vf/2),dh=(size.x/2)/Math.tan(Math.max(.12,hf/2));
+ const dist=Math.max(dv,dh)*1.04;
+ camera.position.set(0,size.y*.015,dist);camera.lookAt(0,size.y*.015,0);camera.near=Math.max(.01,dist/100);camera.far=dist*20;camera.updateProjectionMatrix();
+ floor.position.y=-size.y*.505;floor.scale.setScalar(Math.max(size.x,size.z)*.5);
+}
+function rememberBase(){Object.entries(bones).forEach(([n,b])=>baseQ[n]=b.quaternion.clone());}
+function restoreBase(){Object.entries(bones).forEach(([n,b])=>{if(baseQ[n])b.quaternion.copy(baseQ[n]);});}
+function rot(name,x=0,y=0,z=0){const b=bones[name],q=baseQ[name];if(!b||!q)return;b.quaternion.copy(q).multiply(new THREE.Quaternion().setFromEuler(new THREE.Euler(x,y,z,'XYZ')));}
+function sampleNaturalPose(time=.22){if(!mixer||!action)return;action.stop();action.reset();action.play();mixer.setTime(time);action.paused=true;rememberBase();}
+function startIdle(){if(!action)return;restoreBase();action.paused=false;action.enabled=true;action.reset();action.setLoop(THREE.LoopRepeat,Infinity);action.timeScale=.72;action.play();status.textContent='Idle-rörelse ✓';status.className='status ok';}
+function setState(s){
+ state=s;stateNote.textContent=labels[s];buttons.forEach(b=>b.classList.toggle('active',b.dataset.state===s));
+ if(!action)return;
+ if(s==='idle'){startIdle();return;}
+ action.paused=true;action.stop();restoreBase();status.textContent=(s==='listening'?'Lyssnar':s==='thinking'?'Tänker':'Pratar')+' ✓';status.className='status ok';
+}
 buttons.forEach(b=>b.addEventListener('click',()=>setState(b.dataset.state)));
 
-function cacheRig(done){api.pause();api.seekTo(0,()=>api.getNodeMap((err,map)=>{if(err||!map){done(false);return}const vals=Object.values(map);for(const n of vals)if(wanted.includes(n.name))nodeIds[n.name]=n.instanceID;const found=wanted.filter(n=>nodeIds[n]);if(!found.length){done(false);return}let left=found.length;found.forEach(name=>api.getMatrix(nodeIds[name],(e,m)=>{if(!e&&m)baseMatrices[name]=m.slice();if(--left===0){rigReady=!!baseMatrices['Head_03'];done(rigReady)}}))}))}
+async function loadModel(){
+ try{
+  const parts=await Promise.all(Array.from({length:8},(_,i)=>fetch(`assets/zeus-bin/part${String(i).padStart(2,'0')}.b64?v=20`).then(r=>{if(!r.ok)throw new Error('Kunde inte hämta modellbit '+i);return r.text();})));
+  loading.textContent='Packar upp Zeus…';
+  const raw=atob(parts.join('').replace(/\s+/g,'')),gz=new Uint8Array(raw.length);for(let i=0;i<raw.length;i++)gz[i]=raw.charCodeAt(i);
+  const unpacked=gunzipSync(gz);const buf=unpacked.buffer.slice(unpacked.byteOffset,unpacked.byteOffset+unpacked.byteLength);
+  const loader=new GLTFLoader();
+  loader.parse(buf,'',g=>{
+    model=g.scene;scene.add(model);
+    const remove=[];
+    model.traverse(o=>{
+      if(String(o.name||'').toLowerCase().includes('plane')){remove.push(o);return;}
+      if(o.isBone)bones[o.name]=o;
+      if(o.isMesh&&o.material){for(const m of (Array.isArray(o.material)?o.material:[o.material])){if(String(m.name||'').toLowerCase().includes('hair')){m.map=null;m.color?.set(0xffffff);m.roughness=.72;m.needsUpdate=true;}}}
+    });
+    remove.forEach(o=>o.parent?.remove(o));
+    const clip=g.animations[0];if(!clip)throw new Error('Ingen animation');
+    mixer=new THREE.AnimationMixer(model);action=mixer.clipAction(clip);action.play();mixer.update(0);sampleNaturalPose(.25);
+    resize();fitCamera();setState('idle');loading.style.display='none';
+  },err=>{throw err;});
+ }catch(e){console.error(e);loading.textContent='Kunde inte ladda Zeus';status.textContent='Fel';}
+}
+loadModel();
 
-client.init(UID,{autostart:1,preload:1,camera:0,dnt:1,transparent:1,ui_controls:0,ui_infos:0,ui_help:0,ui_settings:0,ui_inspector:0,ui_vr:0,ui_ar:0,ui_watermark:1,animation_autoplay:0,
- success:_api=>{api=_api;api.start();api.addEventListener('viewerready',()=>{
-  whiteHair();hidePlane(()=>setTimeout(frameVisible,100));
-  api.getAnimations((err,a)=>{
-   if(err||!a||!a.length){motion.textContent='Ingen animation hittad';motion.className='motion bad';loading.style.display='none';return}
-   animUID=a[0][0];duration=Number(a[0][2]||1.6);
-   api.setCurrentAnimationByUID(animUID,()=>cacheRig(ok=>{loading.style.display='none';if(ok){motion.textContent='Rigg redo ✓';motion.className='motion ok';setState('idle')}else{motion.textContent='Rigg kunde inte läsas';motion.className='motion bad';playIdle()}}));
-  });
- });},
- error:()=>{loading.textContent='Kunde inte ladda Zeus';motion.textContent='Fel';motion.className='motion bad'}
-});
-window.ZeusAvatar={setState,frameVisible};
+const clock=new THREE.Clock();
+function animate(){
+ requestAnimationFrame(animate);const dt=Math.min(clock.getDelta(),.05),t=performance.now()/1000;
+ if(model){
+   model.rotation.set(0,userYaw,0);
+   if(state==='idle'){mixer?.update(dt);}
+   else if(state==='listening'){
+     restoreBase();
+     const sway=Math.sin(t*2.0);
+     rot('Spine_01',-.09+.015*sway,0,0);rot('Chest_02',-.14+.02*sway,0,0);rot('Head_03',-.10+.025*Math.sin(t*2.6),-.10,.12);
+     rot('Shoulder.R_017',-.12,.05,-.42);rot('Elbow.R_018',0,.05,-.72);rot('Wrist.R_019',0,.12,-.12);
+     model.rotation.x=-.035;model.rotation.z=.012*Math.sin(t*1.6);
+   } else if(state==='thinking'){
+     restoreBase();
+     rot('Chest_02',-.04,.08,0);rot('Head_03',-.22+.018*Math.sin(t*1.1),.16,.10);
+     rot('Shoulder.R_017',-.32,.12,-.72);rot('Elbow.R_018',-.10,.10,-1.08);rot('Wrist.R_019',0,.22,-.18);
+     rot('Shoulder.L_05',0,0,.08);model.rotation.x=0;model.rotation.z=.012*Math.sin(t*.8);
+   } else if(state==='speaking'){
+     restoreBase();
+     const a=Math.sin(t*4.8),b=Math.sin(t*3.1+1.2);
+     rot('Spine_01',.025*b,.05*b,0);rot('Chest_02',.04*b,.06*a,0);rot('Head_03',.045*a,.10*b,.025*a);
+     rot('Shoulder.L_05',-.10,0,.30+.20*b);rot('Elbow.L_06',0,0,.42+.22*a);
+     rot('Shoulder.R_017',-.10,0,-.30-.20*b);rot('Elbow.R_018',0,0,-.42-.22*a);
+     model.rotation.x=.018*b;model.rotation.z=.018*a;
+   }
+ }
+ renderer.render(scene,camera);
+}
+animate();
+
+viewer.addEventListener('pointerdown',e=>{drag=true;lastX=e.clientX;viewer.setPointerCapture(e.pointerId)});
+viewer.addEventListener('pointermove',e=>{if(!drag)return;userYaw+=(e.clientX-lastX)*.008;lastX=e.clientX});
+viewer.addEventListener('pointerup',()=>drag=false);viewer.addEventListener('pointercancel',()=>drag=false);
+window.ZeusAvatar={setState,reset:()=>{userYaw=0;fitCamera();setState(state)}};
 </script>
 </body>
 </html>
