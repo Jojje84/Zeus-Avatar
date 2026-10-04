@@ -1,91 +1,95 @@
 <!doctype html>
 <html lang="sv">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#07111f">
-  <title>Zeus Companion — Sketchfab test</title>
-  <style>
-    :root{--bg:#06101d;--panel:#0d1b30;--text:#f4f8ff;--muted:#9db2cb;--blue:#81d3ff;--blue2:#609bff;--line:rgba(255,255,255,.09);--ok:#55dda0}
-    *{box-sizing:border-box}
-    html,body{margin:0;min-height:100%;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text);background:radial-gradient(circle at 50% 0,#173d69,#07111e 55%,#040910)}
-    body{padding:12px}
-    .app{max-width:1180px;margin:auto}
-    .top{display:flex;justify-content:space-between;gap:12px;align-items:center;margin:5px 0 14px}
-    .brand{display:flex;gap:12px;align-items:center}
-    .logo{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,#a5e4ff,#609bff);color:#07111e;font-size:26px;font-weight:900}
-    h1{font-size:clamp(1.3rem,3vw,2rem);margin:0}.sub{color:var(--muted);font-size:.88rem}
-    .status{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:999px;padding:9px 13px;background:#ffffff08;font-size:.85rem}
-    .dot{width:9px;height:9px;border-radius:50%;background:var(--ok);box-shadow:0 0 16px var(--ok)}
-    .layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:14px}
-    .stage,.card{border:1px solid var(--line);background:linear-gradient(180deg,#112541f5,#07101df7);border-radius:25px}
-    .stage{position:relative;min-height:720px;overflow:hidden}
-    .head{position:absolute;left:20px;top:17px;z-index:5}.eyebrow{font-size:.68rem;letter-spacing:.14em;color:var(--blue);font-weight:800}.name{font-size:1.15rem;font-weight:800;margin-top:4px}.note{color:var(--muted);font-size:.82rem;margin-top:3px;max-width:560px}
-    .viewer{position:absolute;inset:88px 16px 170px;border:1px solid var(--line);border-radius:23px;overflow:hidden;background:#050a12;box-shadow:inset 0 0 80px rgba(112,201,255,.04)}
-    iframe{width:100%;height:100%;border:0;display:block;background:#050a12}
-    .states{position:absolute;left:16px;right:16px;bottom:16px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-    .states button,.demo{border:1px solid var(--line);border-radius:14px;background:#ffffff0a;color:var(--text);padding:10px;cursor:pointer}
-    .states button.active{background:#5e9cff24;border-color:#81d3ff99}.states b{display:block;font-size:.83rem}.states small{color:var(--muted);font-size:.69rem}
-    .side{display:flex;flex-direction:column;gap:13px}.card{padding:16px}.card h2{font-size:1rem;margin:0 0 5px}.card p{font-size:.83rem;line-height:1.45;color:var(--muted);margin:0 0 11px}
-    .demo{width:100%;font-weight:800;color:#07111e;background:linear-gradient(135deg,#a5e4ff,#609bff)}
-    .speech{margin-top:10px;border:1px solid var(--line);border-radius:12px;background:#06101d;padding:10px}.speech small{display:block;color:var(--blue);font-size:.66rem;font-weight:800;letter-spacing:.1em;margin-bottom:4px}.speech div{font-size:.84rem}
-    .credit{font-size:.75rem;color:#7890aa;line-height:1.45}.credit a{color:#9dd5ff;text-decoration:none}.credit a:hover{text-decoration:underline}
-    .foot{text-align:center;color:#70859c;font-size:.74rem;padding:12px}
-    @media(max-width:900px){.layout{grid-template-columns:1fr}.side{display:grid;grid-template-columns:1fr 1fr}}
-    @media(max-width:620px){body{padding:8px}.side{grid-template-columns:1fr}.stage{min-height:700px}.viewer{inset:112px 8px 182px}.states{grid-template-columns:repeat(2,1fr);left:8px;right:8px}.head{left:15px}.note{max-width:285px}}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07111f">
+<title>Zeus Companion — White Hair Animated</title>
+<script src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
+<style>
+:root{--bg:#06101d;--panel:#0d1b30;--text:#f4f8ff;--muted:#9db2cb;--blue:#81d3ff;--blue2:#609bff;--line:rgba(255,255,255,.09);--ok:#55dda0;--gold:#efc56b}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text);background:radial-gradient(circle at 50% 0,#173d69,#07111e 55%,#040910)}body{padding:12px}.app{max-width:1180px;margin:auto}.top{display:flex;justify-content:space-between;gap:12px;align-items:center;margin:5px 0 14px}.brand{display:flex;gap:12px;align-items:center}.logo{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,#a5e4ff,#609bff);color:#07111e;font-size:26px;font-weight:900}h1{font-size:clamp(1.3rem,3vw,2rem);margin:0}.sub{color:var(--muted);font-size:.88rem}.status{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:999px;padding:9px 13px;background:#ffffff08;font-size:.85rem}.dot{width:9px;height:9px;border-radius:50%;background:var(--ok);box-shadow:0 0 16px var(--ok)}.layout{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:14px}.stage,.card{border:1px solid var(--line);background:linear-gradient(180deg,#112541f5,#07101df7);border-radius:25px}.stage{position:relative;min-height:730px;overflow:hidden}.head{position:absolute;left:20px;top:17px;z-index:5}.eyebrow{font-size:.68rem;letter-spacing:.14em;color:var(--blue);font-weight:800}.name{font-size:1.15rem;font-weight:800;margin-top:4px}.note{color:var(--muted);font-size:.82rem;margin-top:3px;max-width:570px}.viewer{position:absolute;inset:88px 16px 175px;border:1px solid var(--line);border-radius:23px;overflow:hidden;background:#050a12;box-shadow:inset 0 0 80px rgba(112,201,255,.04)}iframe{width:100%;height:100%;border:0;display:block;background:#050a12}.loading{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:4;padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:#07111ee8;color:#d8ecff;font-size:.8rem;pointer-events:none}.states{position:absolute;left:16px;right:16px;bottom:16px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.states button,.demo,.toggle{border:1px solid var(--line);border-radius:14px;background:#ffffff0a;color:var(--text);padding:10px;cursor:pointer}.states button.active{background:#5e9cff24;border-color:#81d3ff99}.states b{display:block;font-size:.83rem}.states small{color:var(--muted);font-size:.69rem}.side{display:flex;flex-direction:column;gap:13px}.card{padding:16px}.card h2{font-size:1rem;margin:0 0 5px}.card p{font-size:.83rem;line-height:1.45;color:var(--muted);margin:0 0 11px}.demo{width:100%;font-weight:800;color:#07111e;background:linear-gradient(135deg,#a5e4ff,#609bff)}.toggle{width:100%;display:flex;justify-content:space-between;align-items:center;margin-top:8px}.toggle strong{font-size:.86rem}.toggle .pill{font-size:.72rem;padding:4px 8px;border-radius:999px;background:rgba(85,221,160,.12);color:#8ff0bd;border:1px solid rgba(85,221,160,.24)}.toggle.off .pill{background:#ffffff0a;color:#9db2cb;border-color:var(--line)}.speech{margin-top:10px;border:1px solid var(--line);border-radius:12px;background:#06101d;padding:10px}.speech small{display:block;color:var(--blue);font-size:.66rem;font-weight:800;letter-spacing:.1em;margin-bottom:4px}.speech div{font-size:.84rem}.tech{font-size:.75rem;color:#8298b2;line-height:1.5}.tech b{color:#d8e8f7}.credit{font-size:.73rem;color:#7890aa;line-height:1.45}.credit a{color:#9dd5ff;text-decoration:none}.foot{text-align:center;color:#70859c;font-size:.74rem;padding:12px}.ready{color:#94efbd}.warn{color:#ffd58b}@media(max-width:900px){.layout{grid-template-columns:1fr}.side{display:grid;grid-template-columns:1fr 1fr}}@media(max-width:620px){body{padding:8px}.side{grid-template-columns:1fr}.stage{min-height:705px}.viewer{inset:112px 8px 187px}.states{grid-template-columns:repeat(2,1fr);left:8px;right:8px}.head{left:15px}.note{max-width:285px}}
+</style>
 </head>
 <body>
 <div class="app">
-  <div class="top">
-    <div class="brand"><div class="logo">ϟ</div><div><h1>Zeus Companion — riktig 3D-modell</h1><div class="sub">Test med Zeus Idle från Sketchfab.</div></div></div>
-    <div class="status"><span class="dot"></span><span id="topStatus">Väntar</span></div>
-  </div>
-
-  <div class="layout">
-    <section class="stage" id="stage" data-state="idle">
-      <div class="head"><div class="eyebrow">AKTIV MODELL</div><div class="name">Zeus Idle</div><div class="note">Riktig nedladdningsbar Zeus-modell. Dra med fingret/musen för att rotera och testa hur den känns.</div></div>
-      <div class="viewer">
-        <iframe
-          title="Zeus Idle"
-          allow="autoplay; fullscreen; xr-spatial-tracking"
-          allowfullscreen
-          mozallowfullscreen="true"
-          webkitallowfullscreen="true"
-          src="https://sketchfab.com/models/ed4308bda4604effb798d107c910ce37/embed?autostart=1&ui_infos=0&ui_help=0&ui_settings=0&ui_inspector=0&ui_vr=0&ui_ar=0&ui_watermark=1">
-        </iframe>
-      </div>
-      <div class="states">
-        <button class="active" data-state="idle">😌<b>Idle</b><small>originalrörelse</small></button>
-        <button data-state="listening">👂<b>Lyssnar</b><small>UI-test</small></button>
-        <button data-state="thinking">🤔<b>Tänker</b><small>UI-test</small></button>
-        <button data-state="speaking">🗣️<b>Pratar</b><small>UI-test</small></button>
-      </div>
-    </section>
-
-    <aside class="side">
-      <div class="card"><h2>Det här testar vi nu</h2><p>Vi använder exakt modellen du hittade i stället för vår egen procedur-gubbe. Först ser vi om utseendet och idle-rörelsen känns rätt.</p><div class="credit">Modell: <b>Zeus Idle</b> av SomeDude / Patyot.Suttipreecha · CC Attribution.<br><a href="https://sketchfab.com/3d-models/zeus-idle-ed4308bda4604effb798d107c910ce37" target="_blank" rel="noopener">Öppna originalet på Sketchfab ↗</a></div></div>
-      <div class="card"><h2>Zeus-lägen</h2><p>Den här modellen verkar framför allt vara gjord för idle. Knapparna nedan testar vårt UI-flöde tills vi vet vilka animationer modellen faktiskt innehåller.</p><button class="demo" id="demo">Starta demo</button><div class="speech"><small id="label">IDLE</small><div id="line">Jag väntar på dig.</div></div></div>
-      <div class="card"><h2>Nästa steg om du gillar honom</h2><p>Då gör vi sidan runt just den här Zeus-gubben och undersöker om filen kan riggas vidare för lyssna, tänka, prata och ansiktsrörelser.</p></div>
-    </aside>
-  </div>
-  <div class="foot">Zeus Idle visas via Sketchfabs officiella 3D-viewer.</div>
+<div class="top"><div class="brand"><div class="logo">ϟ</div><div><h1>Zeus Companion — vit hår + rörelse</h1><div class="sub">Samma Zeus, nu styrd med Sketchfab Viewer API.</div></div></div><div class="status"><span class="dot"></span><span id="topStatus">Laddar</span></div></div>
+<div class="layout">
+<section class="stage" id="stage" data-state="idle">
+<div class="head"><div class="eyebrow">ZEUS IDLE</div><div class="name">Zeus Companion</div><div class="note">Idle-animation spelas i loop. Hår, skägg, mustasch och ögonbryn färgas vita via materialet HairMat.</div></div>
+<div class="viewer"><div class="loading" id="loading">Laddar Zeus + animation…</div><iframe id="api-frame" title="Zeus Idle" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true"></iframe></div>
+<div class="states">
+<button class="active" data-state="idle">😌<b>Idle</b><small>normal hastighet</small></button>
+<button data-state="listening">👂<b>Lyssnar</b><small>lite mer alert</small></button>
+<button data-state="thinking">🤔<b>Tänker</b><small>lugnare rörelse</small></button>
+<button data-state="speaking">🗣️<b>Pratar</b><small>livligare rörelse</small></button>
 </div>
+</section>
+<aside class="side">
+<div class="card"><h2>Rörelsen är riktig</h2><p>Jag styr modellens inbyggda animation via API:t. Filen innehåller en animation, så de fyra lägena använder samma grundrörelse men med olika hastighet.</p><div class="tech" id="animInfo">Animation: <b>kontrolleras…</b></div></div>
+<div class="card"><h2>Vitt hår</h2><p>HairMat används av hår, skägg, mustasch och ögonbryn. Jag försöker nu ersätta den färgade albedo-texturen med vitt direkt i viewern.</p><button class="toggle" id="hairToggle"><strong>Vitt Zeus-hår</strong><span class="pill">PÅ</span></button><div class="tech" id="hairInfo">Material: <b>kontrolleras…</b></div></div>
+<div class="card"><h2>Testa Zeus</h2><button class="demo" id="demo">Starta lägesdemo</button><div class="speech"><small id="label">IDLE</small><div id="line">Jag väntar på dig.</div></div></div>
+<div class="card"><div class="credit">Modell: <b>Zeus Idle</b> av SomeDude / Patyot.Suttipreecha · CC Attribution.<br><a href="https://sketchfab.com/3d-models/zeus-idle-ed4308bda4604effb798d107c910ce37" target="_blank" rel="noopener">Original på Sketchfab ↗</a></div></div>
+</aside>
+</div><div class="foot">Sketchfab Viewer API · Zeus Avatar prototype</div></div>
 <script>
-const stage=document.getElementById('stage');
+const UID='ed4308bda4604effb798d107c910ce37';
+const iframe=document.getElementById('api-frame');
+const client=new Sketchfab('1.12.1',iframe);
+const loading=document.getElementById('loading');
 const topStatus=document.getElementById('topStatus');
+const animInfo=document.getElementById('animInfo');
+const hairInfo=document.getElementById('hairInfo');
+const hairToggle=document.getElementById('hairToggle');
 const label=document.getElementById('label');
 const line=document.getElementById('line');
 const buttons=[...document.querySelectorAll('.states button')];
 const demo=document.getElementById('demo');
-const copy={idle:['Väntar','IDLE','Jag väntar på dig.'],listening:['Lyssnar','LISTENING','Jag hör dig. Fortsätt.'],thinking:['Tänker','THINKING','Hmm… låt mig fundera.'],speaking:['Pratar','SPEAKING','Här kommer mitt svar.']};
-let timer=null,index=0;const order=['idle','listening','thinking','speaking'];
-function setState(s){stage.dataset.state=s;topStatus.textContent=copy[s][0];label.textContent=copy[s][1];line.textContent=copy[s][2];buttons.forEach(b=>b.classList.toggle('active',b.dataset.state===s));}
-function stop(){if(timer)clearInterval(timer);timer=null;demo.textContent='Starta demo';demo.dataset.running='0';}
-function start(){stop();demo.textContent='Stoppa demo';demo.dataset.running='1';index=0;setState(order[index]);timer=setInterval(()=>{index=(index+1)%order.length;setState(order[index]);},2200);}
-buttons.forEach(b=>b.addEventListener('click',()=>{stop();setState(b.dataset.state)}));
-demo.addEventListener('click',()=>demo.dataset.running==='1'?stop():start());
-window.ZeusAvatar={setState};
+const copy={idle:['Väntar','IDLE','Jag väntar på dig.',0.72],listening:['Lyssnar','LISTENING','Jag hör dig. Fortsätt.',0.9],thinking:['Tänker','THINKING','Hmm… låt mig fundera.',0.48],speaking:['Pratar','SPEAKING','Här kommer mitt svar.',1.12]};
+let api=null,animationUID=null,hairMaterial=null,originalHair=null,whiteHair=true,state='idle',timer=null,index=0;
+const order=['idle','listening','thinking','speaking'];
+
+function applyState(s){state=s;const c=copy[s];topStatus.textContent=c[0];label.textContent=c[1];line.textContent=c[2];buttons.forEach(b=>b.classList.toggle('active',b.dataset.state===s));if(api&&animationUID){api.setSpeed(c[3]);api.play();}}
+
+function makeHairWhite(on){
+ if(!api||!hairMaterial)return;
+ if(on){
+   const m=JSON.parse(JSON.stringify(hairMaterial));
+   if(m.channels&&m.channels.AlbedoPBR){m.channels.AlbedoPBR.enable=true;m.channels.AlbedoPBR.color=[1,1,1];m.channels.AlbedoPBR.texture=null;}
+   if(m.channels&&m.channels.DiffusePBR){m.channels.DiffusePBR.enable=true;m.channels.DiffusePBR.color=[1,1,1];m.channels.DiffusePBR.texture=null;}
+   if(m.channels&&m.channels.DiffuseColor){m.channels.DiffuseColor.enable=true;m.channels.DiffuseColor.color=[1,1,1];m.channels.DiffuseColor.texture=null;}
+   api.setMaterial(m,()=>{hairInfo.innerHTML='Material: <b class="ready">HairMat → vitt</b>';});
+ }else if(originalHair){api.setMaterial(JSON.parse(JSON.stringify(originalHair)),()=>{hairInfo.innerHTML='Material: <b>originalfärg</b>';});}
+ hairToggle.classList.toggle('off',!on);hairToggle.querySelector('.pill').textContent=on?'PÅ':'AV';
+}
+
+function stopDemo(){if(timer)clearInterval(timer);timer=null;demo.dataset.running='0';demo.textContent='Starta lägesdemo';}
+function startDemo(){stopDemo();demo.dataset.running='1';demo.textContent='Stoppa demo';index=0;applyState(order[index]);timer=setInterval(()=>{index=(index+1)%order.length;applyState(order[index]);},2600);}
+
+buttons.forEach(b=>b.addEventListener('click',()=>{stopDemo();applyState(b.dataset.state);}));
+demo.addEventListener('click',()=>demo.dataset.running==='1'?stopDemo():startDemo());
+hairToggle.addEventListener('click',()=>{whiteHair=!whiteHair;makeHairWhite(whiteHair);});
+
+client.init(UID,{
+ autostart:1,preload:1,transparent:0,ui_controls:1,ui_infos:0,ui_help:0,ui_settings:0,ui_inspector:0,ui_vr:0,ui_ar:0,ui_watermark:1,animation_autoplay:1,
+ success:function(_api){
+   api=_api;api.start(()=>{});
+   api.addEventListener('viewerready',()=>{
+     loading.style.display='none';topStatus.textContent='Väntar';
+     api.getAnimations((err,anims)=>{
+       if(!err&&anims&&anims.length){animationUID=anims[0][0];api.setCurrentAnimationByUID(animationUID,()=>{api.setCycleMode('loopOne');applyState('idle');});animInfo.innerHTML='Animation: <b class="ready">'+(anims[0][1]||'Idle')+'</b> · '+Number(anims[0][2]||0).toFixed(1)+' s · loop';}
+       else animInfo.innerHTML='Animation: <b class="warn">ingen hittad via API</b>';
+     });
+     api.getMaterialList((err,mats)=>{
+       if(err||!mats){hairInfo.innerHTML='Material: <b class="warn">kunde inte läsas</b>';return;}
+       hairMaterial=mats.find(m=>String(m.name||'').toLowerCase().includes('hair'))||null;
+       if(hairMaterial){originalHair=JSON.parse(JSON.stringify(hairMaterial));hairInfo.innerHTML='Material: <b class="ready">'+hairMaterial.name+' hittad</b>';makeHairWhite(true);}else hairInfo.innerHTML='Material: <b class="warn">HairMat hittades inte</b>';
+     });
+   });
+ },
+ error:function(){loading.textContent='Kunde inte ladda Sketchfab-viewern';topStatus.textContent='Fel';}
+});
+window.ZeusAvatar={setState:applyState,setWhiteHair:(v)=>{whiteHair=!!v;makeHairWhite(whiteHair);},play:()=>api&&api.play(),pause:()=>api&&api.pause()};
 </script>
 </body>
 </html>
