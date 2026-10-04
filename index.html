@@ -3,43 +3,125 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#06101d">
+<meta name="theme-color" content="#07111f">
 <title>Zeus Companion</title>
 <script src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
 <style>
-:root{--text:#f4f8ff;--muted:#9db2cb;--blue:#81d3ff;--line:rgba(255,255,255,.10)}
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:radial-gradient(circle at 50% 28%,#173d69 0,#081421 44%,#03070c 100%);color:var(--text)}
-.app{position:fixed;inset:0;display:flex;flex-direction:column}.top{height:62px;display:flex;align-items:center;justify-content:space-between;padding:10px 14px;z-index:5;background:linear-gradient(180deg,rgba(3,8,14,.78),transparent)}.brand{display:flex;align-items:center;gap:10px}.logo{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(145deg,#a5e4ff,#609bff);color:#07111e;font-size:23px;font-weight:900}.title{font-weight:850;font-size:1rem}.sub{font-size:.72rem;color:var(--muted);margin-top:1px}.status{font-size:.76rem;color:#cfeaff;padding:7px 10px;border:1px solid var(--line);border-radius:999px;background:#07111eb8}
-.viewer{position:absolute;inset:0;overflow:hidden;background:transparent}.viewer iframe{position:absolute;inset:-6%;width:112%;height:112%;border:0;background:transparent;display:block}.loading{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:6;padding:9px 13px;border-radius:999px;background:#07111ee8;border:1px solid var(--line);font-size:.78rem}.controls{position:absolute;left:50%;bottom:max(14px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:7;display:flex;gap:7px;padding:7px;border:1px solid var(--line);border-radius:18px;background:#06101de8;backdrop-filter:blur(14px);max-width:calc(100vw - 16px)}button{border:1px solid var(--line);border-radius:12px;background:#ffffff0a;color:var(--text);padding:9px 11px;cursor:pointer;white-space:nowrap;font-size:.76rem}button.active{background:#5e9cff28;border-color:#81d3ff99}.credit{position:absolute;right:9px;bottom:7px;z-index:5;font-size:.58rem;color:#71869d;opacity:.72}.credit a{color:#87bde0;text-decoration:none}
-.state-glow{position:absolute;inset:0;pointer-events:none;z-index:2;transition:.25s}.app[data-state="listening"] .state-glow{box-shadow:inset 0 0 80px rgba(75,175,255,.12)}.app[data-state="thinking"] .state-glow{box-shadow:inset 0 0 85px rgba(239,197,107,.11)}.app[data-state="speaking"] .state-glow{animation:pulse .55s ease-in-out infinite alternate}@keyframes pulse{to{box-shadow:inset 0 0 110px rgba(88,170,255,.20)}}
-@media(max-width:600px){.top{height:56px;padding:8px}.logo{width:36px;height:36px}.sub{display:none}.status{font-size:.68rem;padding:6px 8px}.viewer iframe{inset:-10%;width:120%;height:120%}.controls{gap:5px;padding:5px}.controls button{padding:8px 9px;font-size:.7rem}.credit{display:none}}
+:root{--text:#f5f8ff;--muted:#9db2cb;--line:rgba(255,255,255,.11);--blue:#7dceff;--ok:#62e6a5}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#020812;color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{background:radial-gradient(circle at 50% 38%,#133b68 0,#071524 44%,#020812 82%)}
+.app{position:relative;width:100%;height:100dvh;min-height:100vh;overflow:hidden}.viewer{position:absolute;inset:0}.viewer iframe{width:100%;height:100%;border:0;display:block;background:transparent}
+.top{position:absolute;z-index:5;left:max(14px,env(safe-area-inset-left));right:max(14px,env(safe-area-inset-right));top:max(16px,env(safe-area-inset-top));display:flex;align-items:center;justify-content:space-between;pointer-events:none}.brand{display:flex;align-items:center;gap:12px}.logo{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(145deg,#a6e8ff,#5e96ff);color:#06101c;font-size:31px;font-weight:900;box-shadow:0 12px 32px #0007}.title{font-size:clamp(1.25rem,5vw,1.8rem);font-weight:800;text-shadow:0 2px 15px #000}.motion{border:1px solid var(--line);border-radius:999px;background:#07111ed9;padding:9px 12px;font-size:.78rem;backdrop-filter:blur(12px)}.motion.ok{color:#9bf2c2;border-color:#62e6a555}.motion.bad{color:#ffd083;border-color:#ffd08355}
+.loading{position:absolute;z-index:6;left:50%;top:48%;transform:translate(-50%,-50%);padding:9px 13px;border-radius:999px;border:1px solid var(--line);background:#07111ee8;color:#d8ecff;font-size:.8rem;pointer-events:none}
+.controls{position:absolute;z-index:5;left:50%;bottom:max(22px,calc(env(safe-area-inset-bottom) + 16px));transform:translateX(-50%);display:flex;gap:7px;padding:8px;border-radius:23px;border:1px solid var(--line);background:#07111edc;backdrop-filter:blur(18px);box-shadow:0 18px 45px #0008}.controls button{border:1px solid var(--line);border-radius:16px;background:#ffffff08;color:var(--text);padding:11px 15px;font-size:.93rem;white-space:nowrap}.controls button.active{background:#62b8ff24;border-color:#7dceffaa;box-shadow:inset 0 0 18px #5dafff16}.hint{position:absolute;z-index:4;left:50%;bottom:102px;transform:translateX(-50%);font-size:.72rem;color:#91a9c2;background:#06101cab;border:1px solid var(--line);padding:6px 10px;border-radius:999px;pointer-events:none;opacity:.9}
+@media(max-width:560px){.logo{width:52px;height:52px}.title{font-size:1.35rem}.motion{font-size:.72rem;padding:8px 10px}.controls{gap:5px;padding:7px;max-width:calc(100vw - 18px)}.controls button{font-size:.82rem;padding:10px 11px}.hint{bottom:96px}}
 </style>
 </head>
 <body>
 <div class="app" id="app" data-state="idle">
-  <div class="top"><div class="brand"><div class="logo">ϟ</div><div><div class="title">Zeus Companion</div><div class="sub">Bara Zeus — tätt beskuren och centrerad</div></div></div><div class="status" id="status">Laddar</div></div>
-  <div class="viewer"><div class="loading" id="loading">Laddar Zeus…</div><iframe id="api-frame" title="Zeus 3D" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen></iframe></div>
-  <div class="state-glow"></div>
+  <div class="viewer"><iframe id="api-frame" title="Zeus 3D" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen></iframe></div>
+  <div class="top"><div class="brand"><div class="logo">ϟ</div><div class="title">Zeus Companion</div></div><div class="motion" id="motion">Kontrollerar rörelse…</div></div>
+  <div class="loading" id="loading">Laddar och centrerar Zeus…</div>
+  <div class="hint" id="hint">Idle · normal rörelse</div>
   <div class="controls">
     <button class="active" data-state="idle">😌 Idle</button>
     <button data-state="listening">👂 Lyssnar</button>
     <button data-state="thinking">🤔 Tänker</button>
     <button data-state="speaking">🗣️ Pratar</button>
   </div>
-  <div class="credit">Zeus Idle — SomeDude · <a href="https://sketchfab.com/3d-models/zeus-idle-ed4308bda4604effb798d107c910ce37" target="_blank" rel="noopener">CC BY</a></div>
 </div>
 <script>
 const UID='ed4308bda4604effb798d107c910ce37';
-const iframe=document.getElementById('api-frame'),client=new Sketchfab('1.12.1',iframe),app=document.getElementById('app'),loading=document.getElementById('loading'),statusEl=document.getElementById('status'),buttons=[...document.querySelectorAll('[data-state]')].filter(x=>x.tagName==='BUTTON');
-let api=null,animUID=null,duration=1.6,baseCamera=null,state='idle';
-const statusText={idle:'Idle',listening:'Lyssnar',thinking:'Tänker',speaking:'Pratar'};
-function setHairWhite(){api.getMaterialList((err,mats)=>{if(err||!mats)return;const hair=mats.find(m=>String(m.name||'').toLowerCase().includes('hair'));if(!hair)return;const m=JSON.parse(JSON.stringify(hair));for(const k of ['AlbedoPBR','DiffusePBR','DiffuseColor'])if(m.channels&&m.channels[k]){m.channels[k].enable=true;m.channels[k].color=[1,1,1];m.channels[k].texture=null}api.setMaterial(m)})}
-function hidePlane(done){api.getNodeMap((err,nodes)=>{if(err||!nodes){done();return}const planes=Object.values(nodes).filter(n=>{const s=String(n.name||'').toLowerCase();return s==='plane'||s.includes('plane_material')});if(!planes.length){done();return}let left=planes.length;planes.forEach(n=>api.hide(n.instanceID,()=>{if(--left===0)done()}))})}
-function tightFrame(){api.recenterCamera(()=>api.getCameraLookAt((err,c)=>{if(err||!c)return;const p=c.position,t=c.target,dx=p[0]-t[0],dy=p[1]-t[1],dz=p[2]-t[2];const zoom=.34;const target=[t[0],t[1]+Math.hypot(dx,dy,dz)*.015,t[2]];const pos=[target[0]+dx*zoom,target[1]+dy*zoom,target[2]+dz*zoom];baseCamera={position:pos,target};api.setCameraLookAt(pos,target,0)}))}
-function playIdle(){if(!api||!animUID)return;api.setCurrentAnimationByUID(animUID,()=>{api.setCycleMode('loopOne');api.setSpeed(1);api.seekTo(0,()=>api.play())})}
-function applyState(s){state=s;app.dataset.state=s;statusEl.textContent=statusText[s];buttons.forEach(b=>b.classList.toggle('active',b.dataset.state===s));if(!api||!animUID)return;if(s==='idle'){api.setCycleMode('loopOne');api.setSpeed(1);api.play()}else if(s==='listening'){api.setCycleMode('loopOne');api.setSpeed(.65);api.play()}else if(s==='thinking'){api.pause();api.seekTo(Math.min(duration*.56,duration-.08),()=>api.pause())}else{api.setCycleMode('loopOne');api.setSpeed(1.35);api.seekTo(0,()=>api.play())}}
-buttons.forEach(b=>b.addEventListener('click',()=>applyState(b.dataset.state)));
-client.init(UID,{autostart:1,preload:1,camera:0,dnt:1,transparent:1,ui_controls:0,ui_infos:0,ui_help:0,ui_settings:0,ui_inspector:0,ui_vr:0,ui_ar:0,ui_watermark:0,animation_autoplay:0,success:_api=>{api=_api;api.start();api.addEventListener('viewerready',()=>{api.setEnableCameraConstraints(false);setHairWhite();api.getAnimations((err,a)=>{if(!err&&a&&a.length){animUID=a[0][0];duration=Number(a[0][2]||1.6)}hidePlane(()=>{setTimeout(()=>{tightFrame();if(animUID)playIdle();loading.style.display='none';statusEl.textContent='Idle'},220)})})})},error:()=>{loading.textContent='Kunde inte ladda Zeus';statusEl.textContent='Fel'}});
-window.ZeusAvatar={setState:applyState,tightFrame,play:playIdle};
+const frame=document.getElementById('api-frame');
+const client=new Sketchfab('1.12.1',frame);
+const loading=document.getElementById('loading');
+const motion=document.getElementById('motion');
+const hint=document.getElementById('hint');
+const buttons=[...document.querySelectorAll('.controls button')];
+let api=null,animUID=null,duration=1.6,state='idle',baseCamera=null,verifyTimer=null;
+const modes={
+ idle:{speed:.95,label:'Idle · normal rörelse',zoom:1},
+ listening:{speed:.55,label:'Lyssnar · lugnare rörelse',zoom:.93},
+ thinking:{speed:.32,label:'Tänker · långsam rörelse',zoom:.97},
+ speaking:{speed:1.75,label:'Pratar · snabb rörelse',zoom:.90}
+};
+function hidePlane(done){
+ api.getNodeMap((err,nodes)=>{
+  if(err||!nodes){done();return}
+  const planes=Object.values(nodes).filter(n=>String(n.name||'').toLowerCase().includes('plane'));
+  if(!planes.length){done();return}
+  let left=planes.length;
+  planes.forEach(n=>api.hide(n.instanceID,()=>{if(--left===0)done()}));
+ });
+}
+function whiteHair(){
+ api.getMaterialList((err,mats)=>{
+  if(err||!mats)return;
+  const hair=mats.find(m=>String(m.name||'').toLowerCase().includes('hair'));
+  if(!hair)return;
+  const m=JSON.parse(JSON.stringify(hair));
+  for(const k of ['AlbedoPBR','DiffusePBR','DiffuseColor']) if(m.channels&&m.channels[k]){m.channels[k].enable=true;m.channels[k].color=[1,1,1];m.channels[k].texture=null}
+  api.setMaterial(m);
+ });
+}
+function frameVisible(){
+ api.setEnableCameraConstraints(false);
+ api.focusOnVisibleGeometries(err=>{
+  if(err)return;
+  api.getCameraLookAt((e,c)=>{
+   if(e||!c)return;
+   const p=c.position,t=c.target,dx=p[0]-t[0],dy=p[1]-t[1],dz=p[2]-t[2];
+   const close=.68;
+   baseCamera={position:[t[0]+dx*close,t[1]+dy*close,t[2]+dz*close],target:[...t]};
+   api.setCameraLookAt(baseCamera.position,baseCamera.target,0);
+  });
+ });
+}
+function applyCamera(s){
+ if(!baseCamera)return;
+ const m=modes[s],p=baseCamera.position,t=baseCamera.target,dx=p[0]-t[0],dy=p[1]-t[1],dz=p[2]-t[2];
+ const z=m.zoom;
+ api.setCameraLookAt([t[0]+dx*z,t[1]+dy*z,t[2]+dz*z],t,.22);
+}
+function playCurrent(speed){
+ if(!api||!animUID)return;
+ api.setCurrentAnimationByUID(animUID,err=>{
+  if(err){motion.textContent='Animationsfel';motion.className='motion bad';return}
+  api.setCycleMode('loopOne',()=>api.setSpeed(speed,()=>api.seekTo(0,()=>api.play())));
+ });
+}
+function verifyMovement(){
+ if(!api||!animUID)return;
+ clearTimeout(verifyTimer);
+ api.getCurrentTime((e,t1)=>{
+  if(e)return;
+  verifyTimer=setTimeout(()=>api.getCurrentTime((e2,t2)=>{
+   if(e2)return;
+   let d=t2-t1;if(d<0)d+=duration;
+   if(d>.04){motion.textContent='Rörelse ✓';motion.className='motion ok'}
+   else{motion.textContent='Startar om rörelse…';motion.className='motion bad';playCurrent(modes[state].speed);setTimeout(verifyMovement,850)}
+  }),750);
+ });
+}
+function setState(s){
+ state=s;hint.textContent=modes[s].label;buttons.forEach(b=>b.classList.toggle('active',b.dataset.state===s));
+ playCurrent(modes[s].speed);applyCamera(s);setTimeout(verifyMovement,180);
+}
+buttons.forEach(b=>b.addEventListener('click',()=>setState(b.dataset.state)));
+client.init(UID,{autostart:1,preload:1,camera:0,dnt:1,transparent:1,ui_controls:0,ui_infos:0,ui_help:0,ui_settings:0,ui_inspector:0,ui_vr:0,ui_ar:0,ui_watermark:1,animation_autoplay:0,
+ success:_api=>{api=_api;api.start();api.addEventListener('viewerready',()=>{
+  whiteHair();
+  hidePlane(()=>setTimeout(()=>{frameVisible();loading.style.display='none'},120));
+  api.getAnimations((err,a)=>{
+   if(err||!a||!a.length){motion.textContent='Ingen animation hittad';motion.className='motion bad';return}
+   animUID=a[0][0];duration=Number(a[0][2]||1.6);
+   playCurrent(modes.idle.speed);
+   setTimeout(verifyMovement,900);
+  });
+ });},
+ error:()=>{loading.textContent='Kunde inte ladda Zeus';motion.textContent='Fel';motion.className='motion bad'}
+});
+window.ZeusAvatar={setState,frameVisible,verifyMovement};
 </script>
-</body></html>
+</body>
+</html>
