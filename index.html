@@ -1,16 +1,151 @@
 <!doctype html>
-<html lang="sv"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Zeus Companion — egen 3D</title><style>
-:root{--bg:#06101d;--p:#0d1b30;--t:#f4f8ff;--m:#9db2cb;--b:#81d3ff;--l:rgba(255,255,255,.09)}*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:system-ui;color:var(--t);background:radial-gradient(circle at 50% 0,#173d69,#07111e 55%,#040910)}body{padding:12px}.app{max-width:1180px;margin:auto}.top{display:flex;justify-content:space-between;gap:12px;align-items:center;margin:5px 0 14px}.brand{display:flex;gap:12px;align-items:center}.logo{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,#a5e4ff,#609bff);color:#07111e;font-size:26px;font-weight:900}h1{font-size:clamp(1.3rem,3vw,2rem);margin:0}.sub{color:var(--m);font-size:.88rem}.status{border:1px solid var(--l);border-radius:999px;padding:9px 13px;background:#ffffff08;font-size:.85rem}.layout{display:grid;grid-template-columns:1fr 320px;gap:14px}.stage,.card{border:1px solid var(--l);background:linear-gradient(180deg,#112541f5,#07101df7);border-radius:25px}.stage{position:relative;min-height:720px;overflow:hidden}.head{position:absolute;left:20px;top:17px;z-index:5}.eyebrow{font-size:.68rem;letter-spacing:.14em;color:var(--b);font-weight:800}.name{font-size:1.15rem;font-weight:800;margin-top:4px}.note{color:var(--m);font-size:.82rem;margin-top:3px}.viewer{position:absolute;inset:88px 16px 170px;border:1px solid var(--l);border-radius:21px;overflow:hidden;background:radial-gradient(circle,#1e4a7440,#040a12 70%)}#wrap{position:absolute;inset:0}.hint{position:absolute;left:12px;bottom:10px;background:#07111ed9;border:1px solid var(--l);border-radius:999px;padding:6px 9px;color:#a8bdd5;font-size:.7rem}.states{position:absolute;left:16px;right:16px;bottom:16px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.states button,.pick,.demo{border:1px solid var(--l);border-radius:14px;background:#ffffff0a;color:var(--t);padding:10px;cursor:pointer}.states button.active{background:#5e9cff24;border-color:#81d3ff99}.states b{display:block;font-size:.83rem}.states small{color:var(--m);font-size:.69rem}.side{display:flex;flex-direction:column;gap:13px}.card{padding:16px}.card h2{font-size:1rem;margin:0 0 5px}.card p{font-size:.83rem;line-height:1.45;color:var(--m);margin:0 0 11px}.pick{width:100%;display:flex;text-align:left;gap:10px;align-items:center;margin-top:7px}.pick.active{border-color:#ffb9d499;background:#ffb9d412}.icon{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:#ffffff0b;font-size:22px}.pick span:last-child{flex:1}.pick small{display:block;color:var(--m);margin-top:2px}.demo{width:100%;font-weight:800;color:#07111e;background:linear-gradient(135deg,#a5e4ff,#609bff)}.speech{margin-top:10px;border:1px solid var(--l);border-radius:12px;background:#06101d;padding:10px}.speech small{display:block;color:var(--b);font-size:.66rem;font-weight:800;letter-spacing:.1em;margin-bottom:4px}.speech div{font-size:.84rem}.foot{text-align:center;color:#70859c;font-size:.74rem;padding:12px}@media(max-width:900px){.layout{grid-template-columns:1fr}.side{display:grid;grid-template-columns:1fr 1fr}}@media(max-width:620px){.side{grid-template-columns:1fr}.stage{min-height:680px}.viewer{inset:112px 8px 182px}.states{grid-template-columns:repeat(2,1fr);left:8px;right:8px}}
-</style></head><body><div class="app"><div class="top"><div class="brand"><div class="logo">ϟ</div><div><h1>Zeus Companion — egen 3D-design</h1><div class="sub">Gubben byggs direkt i GitHub-koden med Three.js. Ingen Sketchfab-figur.</div></div></div><div class="status" id="top">Väntar</div></div><div class="layout"><section class="stage"><div class="head"><div class="eyebrow">EGEN 3D-KARAKTÄR</div><div class="name" id="name">Mysig Zeus</div><div class="note" id="note">Rund, gullig och skäggig med stort huvud och liten kropp.</div></div><div class="viewer"><div id="wrap"></div><div class="hint">Dra för att rotera · scroll/pinch för zoom</div></div><div class="states"><button class="active" data-state="idle">😌<b>Idle</b><small>andas + blinkar</small></button><button data-state="listening">👂<b>Lyssnar</b><small>lutar sig fram</small></button><button data-state="thinking">🤔<b>Tänker</b><small>hand mot skägg</small></button><button data-state="speaking">🗣️<b>Pratar</b><small>mun + gester</small></button></div></section><aside class="side"><div class="card"><h2>Tre egna gubbar</h2><p>Alla tre skapas av vår egen kod och kan ändras precis som vi vill.</p><button class="pick active" data-model="cozy"><span class="icon">☁️</span><span><b>Mysig Zeus</b><small>Rundast och gulligast</small></span></button><button class="pick" data-model="mini"><span class="icon">⚡</span><span><b>Mini Zeus</b><small>Större huvud, mindre kropp</small></span></button><button class="pick" data-model="sage"><span class="icon">🧙‍♂️</span><span><b>Vise Zeus</b><small>Längre skägg, lugnare</small></span></button></div><div class="card"><h2>Olika rörelser</h2><p>Nu gör lägena faktiskt olika saker med kroppen, armarna, huvudet och munnen.</p><button class="demo" id="demo">Starta demo</button><div class="speech"><small id="label">IDLE</small><div id="line">Jag väntar på dig.</div></div></div><div class="card"><h2>Nästa steg</h2><p>Om någon av dessa är nära rätt känsla kan jag finjustera ansikte, hår, skägg, kläder och rörelser direkt här.</p></div></aside></div><div class="foot">Procedural 3D med Three.js · körs direkt på GitHub Pages</div></div>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07111f">
+<title>Zeus Companion — mjuk 3D</title>
+<style>
+:root{--bg:#06101d;--panel:#0d1b30;--text:#f4f8ff;--muted:#9db2cb;--blue:#81d3ff;--blue2:#609bff;--pink:#ffbdd7;--line:rgba(255,255,255,.09)}*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text);background:radial-gradient(circle at 50% 0,#173d69,#07111e 55%,#040910)}body{padding:12px}.app{max-width:1180px;margin:auto}.top{display:flex;justify-content:space-between;gap:12px;align-items:center;margin:5px 0 14px}.brand{display:flex;gap:12px;align-items:center}.logo{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,#a5e4ff,#609bff);color:#07111e;font-size:26px;font-weight:900}h1{font-size:clamp(1.3rem,3vw,2rem);margin:0}.sub{color:var(--muted);font-size:.88rem}.status{border:1px solid var(--line);border-radius:999px;padding:9px 13px;background:#ffffff08;font-size:.85rem}.layout{display:grid;grid-template-columns:1fr 320px;gap:14px}.stage,.card{border:1px solid var(--line);background:linear-gradient(180deg,#112541f5,#07101df7);border-radius:25px}.stage{position:relative;min-height:720px;overflow:hidden}.head{position:absolute;left:20px;top:17px;z-index:5}.eyebrow{font-size:.68rem;letter-spacing:.14em;color:var(--blue);font-weight:800}.name{font-size:1.15rem;font-weight:800;margin-top:4px}.note{color:var(--muted);font-size:.82rem;margin-top:3px}.viewer{position:absolute;inset:88px 16px 170px;border:1px solid var(--line);border-radius:23px;overflow:hidden;background:radial-gradient(circle at 50% 46%,rgba(71,154,220,.2),#040a12 72%)}#wrap{position:absolute;inset:0}.hint{position:absolute;left:12px;bottom:10px;background:#07111ed9;border:1px solid var(--line);border-radius:999px;padding:6px 9px;color:#a8bdd5;font-size:.7rem;z-index:4}.soft{position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 90px rgba(112,201,255,.05);z-index:3}.states{position:absolute;left:16px;right:16px;bottom:16px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.states button,.pick,.demo{border:1px solid var(--line);border-radius:14px;background:#ffffff0a;color:var(--text);padding:10px;cursor:pointer}.states button.active{background:#5e9cff24;border-color:#81d3ff99}.states b{display:block;font-size:.83rem}.states small{color:var(--muted);font-size:.69rem}.side{display:flex;flex-direction:column;gap:13px}.card{padding:16px}.card h2{font-size:1rem;margin:0 0 5px}.card p{font-size:.83rem;line-height:1.45;color:var(--muted);margin:0 0 11px}.pick{width:100%;display:flex;text-align:left;gap:10px;align-items:center;margin-top:7px}.pick.active{border-color:#ffbdd799;background:#ffbdd712}.icon{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:#ffffff0b;font-size:22px}.pick span:last-child{flex:1}.pick small{display:block;color:var(--muted);margin-top:2px}.demo{width:100%;font-weight:800;color:#07111e;background:linear-gradient(135deg,#a5e4ff,#609bff)}.speech{margin-top:10px;border:1px solid var(--line);border-radius:12px;background:#06101d;padding:10px}.speech small{display:block;color:var(--blue);font-size:.66rem;font-weight:800;letter-spacing:.1em;margin-bottom:4px}.speech div{font-size:.84rem}.foot{text-align:center;color:#70859c;font-size:.74rem;padding:12px}@media(max-width:900px){.layout{grid-template-columns:1fr}.side{display:grid;grid-template-columns:1fr 1fr}}@media(max-width:620px){body{padding:8px}.side{grid-template-columns:1fr}.stage{min-height:690px}.viewer{inset:112px 8px 182px}.states{grid-template-columns:repeat(2,1fr);left:8px;right:8px}.head{left:15px}.note{max-width:285px}}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="top"><div class="brand"><div class="logo">ϟ</div><div><h1>Zeus Companion — mjukare 3D</h1><div class="sub">Utzoomad helfigur + rundare former och mjukare ljus.</div></div></div><div class="status" id="top">Väntar</div></div>
+<div class="layout">
+<section class="stage"><div class="head"><div class="eyebrow">EGEN 3D-KARAKTÄR</div><div class="name" id="name">Mysig Zeus</div><div class="note" id="note">Rund, mjuk och gullig med hela kroppen synlig.</div></div><div class="viewer"><div id="wrap"></div><div class="soft"></div><div class="hint">Dra för att rotera · pinch för zoom</div></div><div class="states"><button class="active" data-state="idle">😌<b>Idle</b><small>andas + blinkar</small></button><button data-state="listening">👂<b>Lyssnar</b><small>lutar sig fram</small></button><button data-state="thinking">🤔<b>Tänker</b><small>hand mot skägg</small></button><button data-state="speaking">🗣️<b>Pratar</b><small>mun + gester</small></button></div></section>
+<aside class="side"><div class="card"><h2>Tre mjukare varianter</h2><p>Alla är byggda direkt i Three.js men nu med rundare geometri, mjukare hår/skägg och helfigur i kameran.</p><button class="pick active" data-model="cozy"><span class="icon">☁️</span><span><b>Mysig Zeus</b><small>Mjukast och rundast</small></span></button><button class="pick" data-model="mini"><span class="icon">⚡</span><span><b>Mini Zeus</b><small>Stort huvud, liten kropp</small></span></button><button class="pick" data-model="sage"><span class="icon">🧙‍♂️</span><span><b>Vise Zeus</b><small>Längre mjukt skägg</small></span></button></div><div class="card"><h2>Rörelser</h2><p>Idle, lyssna, tänka och prata är separata rörelser. De är medvetet lugnare än tidigare.</p><button class="demo" id="demo">Starta demo</button><div class="speech"><small id="label">IDLE</small><div id="line">Jag väntar på dig.</div></div></div><div class="card"><h2>Detta fixades</h2><p>Kameran är flyttad bakåt så hela Zeus syns direkt. Huvud, hår, skägg, armar och kropp använder fler segment och rundare former.</p></div></aside>
+</div><div class="foot">Procedural 3D med Three.js · direkt på GitHub Pages</div></div>
 <script type="module">
-import * as THREE from 'https://esm.sh/three@0.180.0';import{OrbitControls}from'https://esm.sh/three@0.180.0/examples/jsm/controls/OrbitControls.js';
-const W=document.getElementById('wrap'),scene=new THREE.Scene(),cam=new THREE.PerspectiveCamera(32,1,.1,100);cam.position.set(0,2,8);const ren=new THREE.WebGLRenderer({antialias:true,alpha:true});ren.setPixelRatio(Math.min(devicePixelRatio,2));ren.outputColorSpace=THREE.SRGBColorSpace;W.appendChild(ren.domElement);const ctl=new OrbitControls(cam,ren.domElement);ctl.enableDamping=true;ctl.enablePan=false;ctl.target.set(0,1.4,0);ctl.minDistance=5;ctl.maxDistance=10;scene.add(new THREE.HemisphereLight(0xd9f0ff,0x17213a,2.5));let dl=new THREE.DirectionalLight(0xffffff,3);dl.position.set(4,6,5);scene.add(dl);let pl=new THREE.PointLight(0x64c8ff,18,9);pl.position.set(-3,3,2);scene.add(pl);
-const M={skin:new THREE.MeshStandardMaterial({color:0xf2bd9c,roughness:.72}),skin2:new THREE.MeshStandardMaterial({color:0xe9a783,roughness:.78}),hair:new THREE.MeshStandardMaterial({color:0xf5f7fb,roughness:.85}),shadow:new THREE.MeshStandardMaterial({color:0xcad4e1,roughness:.85}),eye:new THREE.MeshStandardMaterial({color:0x20202a}),iris:new THREE.MeshStandardMaterial({color:0x58bcff,emissive:0x0b2942,emissiveIntensity:.25}),white:new THREE.MeshStandardMaterial({color:0xffffff}),robe:new THREE.MeshStandardMaterial({color:0xf0f3f8,roughness:.8}),gold:new THREE.MeshStandardMaterial({color:0xe5ba51,metalness:.45,roughness:.35}),mouth:new THREE.MeshStandardMaterial({color:0x7a3d3d}),sandal:new THREE.MeshStandardMaterial({color:0xaa6c3d})};const sph=(r,m,s=[1,1,1])=>{let x=new THREE.Mesh(new THREE.SphereGeometry(r,28,18),m);x.scale.set(...s);return x},cyl=(a,b,h,m)=>new THREE.Mesh(new THREE.CylinderGeometry(a,b,h,24),m),box=(a,b,c,m)=>new THREE.Mesh(new THREE.BoxGeometry(a,b,c),m);
-const floor=new THREE.Mesh(new THREE.CircleGeometry(2.4,64),new THREE.MeshBasicMaterial({color:0x2f8ee8,transparent:true,opacity:.13}));floor.rotation.x=-Math.PI/2;floor.position.y=-1.05;scene.add(floor);
-const cfg={cozy:{name:'Mysig Zeus',note:'Rund, gullig och skäggig med stort huvud och liten kropp.',h:1.05,b:.92,e:1.08,be:1.0},mini:{name:'Mini Zeus',note:'Extra chibi med jättestort huvud, stora ögon och pytteliten kropp.',h:1.18,b:.78,e:1.18,be:.9},sage:{name:'Vise Zeus',note:'Lite äldre känsla med längre skägg och lugnare proportioner.',h:.98,b:1.02,e:.94,be:1.2}};let A,P,model='cozy',state='idle';
-function bolt(){let s=new THREE.Shape();s.moveTo(-.05,.6);s.lineTo(-.28,.1);s.lineTo(-.05,.12);s.lineTo(-.25,-.55);s.lineTo(.3,.08);s.lineTo(.08,.08);s.lineTo(.28,.6);s.closePath();let m=new THREE.Mesh(new THREE.ShapeGeometry(s),M.gold);m.scale.set(.4,.4,.4);return m}
-function build(k){if(A)scene.remove(A);let c=cfg[k],g=new THREE.Group(),body=new THREE.Group();g.add(body);let torso=sph(.8,M.robe,[.82,.9,.62]);torso.scale.multiplyScalar(c.b);body.add(torso);let belt=box(1.15*c.b,.14,.6,M.gold);belt.position.set(0,-.42*c.b,.05);body.add(belt);let neck=cyl(.2,.22,.28,M.skin);neck.position.y=.75*c.b;body.add(neck);let hr=new THREE.Group();hr.position.y=1.35*c.b;g.add(hr);let head=sph(1*c.h,M.skin,[1,.96,.9]);hr.add(head);for(let q of[-1,1]){let ear=sph(.19*c.h,M.skin2,[.8,1,1]);ear.position.set(q*.96*c.h,-.02,0);hr.add(ear)}let eyes=[];for(let q of[-1,1]){let er=new THREE.Group();er.position.set(q*.38*c.h,.1*c.h,.82*c.h);hr.add(er);let ew=sph(.21*c.e,M.white,[1.05,1.12,.38]);er.add(ew);let ir=sph(.12*c.e,M.iris,[1,1,.3]);ir.position.z=.17;er.add(ir);let pu=sph(.06*c.e,M.eye,[1,1,.28]);pu.position.z=.22;er.add(pu);let sh=sph(.026*c.e,M.white);sh.position.set(-.035,.05,.25);er.add(sh);eyes.push(er)}let nose=sph(.14*c.h,M.skin2,[.85,1.05,.9]);nose.position.set(0,-.03*c.h,.91*c.h);hr.add(nose);let mouth=sph(.12,M.mouth,[1.15,.4,.23]);mouth.position.set(0,-.34*c.h,.87*c.h);hr.add(mouth);for(let q of[-1,1]){let mu=sph(.22*c.h,M.hair,[1.2,.4,.35]);mu.position.set(q*.17*c.h,-.24*c.h,.92*c.h);mu.rotation.z=-q*.18;hr.add(mu)}let hair=new THREE.Group();hr.add(hair);[[-.72,.58,.3],[-.42,.82,.2],[-.08,.92,.15],[.27,.88,.18],[.58,.7,.24],[-.82,.28,.14],[.82,.33,.12]].forEach(p=>{let s=sph(.34*c.h,M.hair,[1.05,.85,.8]);s.position.set(p[0]*c.h,p[1]*c.h,p[2]*c.h);hair.add(s)});let beard=new THREE.Group();beard.scale.y=c.be;hr.add(beard);[[-.48,-.42,.66],[-.24,-.56,.72],[0,-.61,.75],[.24,-.56,.72],[.48,-.42,.66],[-.35,-.72,.58],[-.1,-.83,.62],[.15,-.82,.62],[.38,-.7,.56],[0,-1.02,.5]].forEach(p=>{let s=sph(.28,M.hair,[1.05,1,.72]);s.position.set(p[0]*c.h,p[1]*c.h,p[2]*c.h);beard.add(s)});function arm(q){let r=new THREE.Group();r.position.set(q*.72*c.b,.28*c.b,0);body.add(r);let u=cyl(.15,.17,.62*c.b,M.skin);u.position.y=-.2*c.b;r.add(u);let hand=sph(.18,M.skin,[.9,1,.85]);hand.position.y=-.54*c.b;r.add(hand);return r}let l=arm(-1),r=arm(1);for(let q of[-1,1]){let leg=cyl(.13,.15,.5*c.b,M.skin);leg.position.set(q*.28,-.8*c.b,0);body.add(leg);let foot=sph(.21,M.skin,[1.3,.55,1.55]);foot.position.set(q*.28,-1.08*c.b,.16);body.add(foot)}let staff=new THREE.Group();staff.position.set(1.12*c.b,.5*c.b,0);body.add(staff);let rod=cyl(.04,.04,2.1*c.b,M.gold);rod.position.y=-.42*c.b;staff.add(rod);let bo=bolt();bo.position.y=.7*c.b;staff.add(bo);g.scale.setScalar(1.05);scene.add(g);A=g;P={g,hr,eyes,mouth,l,r,staff,beard};model=k;document.getElementById('name').textContent=c.name;document.getElementById('note').textContent=c.note;document.querySelectorAll('.pick').forEach(x=>x.classList.toggle('active',x.dataset.model===k))}
-const words={idle:['Väntar','IDLE','Jag väntar på dig.'],listening:['Lyssnar','LISTENING','Jag hör dig. Fortsätt.'],thinking:['Tänker','THINKING','Hmm… låt mig fundera.'],speaking:['Pratar','SPEAKING','Här kommer mitt svar.']};function setState(s){state=s;let w=words[s];document.getElementById('top').textContent=w[0];document.getElementById('label').textContent=w[1];document.getElementById('line').textContent=w[2];document.querySelectorAll('.states button').forEach(x=>x.classList.toggle('active',x.dataset.state===s))}
-let blinkAt=performance.now()+2200,bl=0;function ap(o,p,v,a=.1){o[p]+=(v-o[p])*a}function loop(ms){requestAnimationFrame(loop);if(!P)return;let t=ms/1000,hx=0,hz=0,ly=0,lz=0,ry=0,rz=0,sz=0,my=.4,gy=.05+Math.sin(t*2)*.02;if(state==='idle'){hz=Math.sin(t*1.2)*.025;lz=Math.sin(t*1.4)*.03;rz=-lz}else if(state==='listening'){hz=-.14;hx=.07;lz=-.7;ly=-.15;rz=.12}else if(state==='thinking'){hz=.15;hx=-.06;rz=-.95;ry=.18;lz=.1}else{hz=Math.sin(t*3.2)*.04;hx=Math.sin(t*2.1)*.03;lz=-.35+Math.sin(t*3)*.18;rz=.35-Math.sin(t*2.7)*.15;sz=Math.sin(t*2.5)*.06;my=.4+Math.abs(Math.sin(t*9))*.9}ap(P.g.position,'y',gy,.12);ap(P.hr.rotation,'z',hz);ap(P.hr.rotation,'x',hx);ap(P.l.rotation,'z',lz);ap(P.l.rotation,'x',ly);ap(P.r.rotation,'z',rz);ap(P.r.rotation,'x',ry);ap(P.staff.rotation,'z',sz);ap(P.mouth.scale,'y',my,.22);if(ms>blinkAt){bl=1;blinkAt=ms+2800+Math.random()*2500}if(bl){let y=Math.max(.06,Math.abs(Math.cos(bl*Math.PI)));P.eyes.forEach(e=>e.scale.y=y);bl+=.14;if(bl>1.95){bl=0;P.eyes.forEach(e=>e.scale.y=1)}}ctl.update();ren.render(scene,cam)}
-function resize(){let r=W.getBoundingClientRect();ren.setSize(r.width,r.height,false);cam.aspect=r.width/r.height;cam.updateProjectionMatrix()}new ResizeObserver(resize).observe(W);document.querySelectorAll('.pick').forEach(x=>x.onclick=()=>{stop();build(x.dataset.model);setState('idle')});document.querySelectorAll('.states button').forEach(x=>x.onclick=()=>{stop();setState(x.dataset.state)});let tm=null,i=0,ord=['idle','listening','thinking','speaking'];function start(){stop();demo.textContent='Stoppa demo';demo.dataset.on='1';setState(ord[0]);tm=setInterval(()=>{i=(i+1)%4;setState(ord[i])},2500)}function stop(){if(tm)clearInterval(tm);tm=null;demo.textContent='Starta demo';demo.dataset.on='0'}const demo=document.getElementById('demo');demo.onclick=()=>demo.dataset.on==='1'?stop():start();window.ZeusAvatar={setState,setModel:build};build('cozy');setState('idle');resize();loop(performance.now());
-</script></body></html>
+import * as THREE from 'https://esm.sh/three@0.180.0';
+import {OrbitControls} from 'https://esm.sh/three@0.180.0/examples/jsm/controls/OrbitControls.js';
+
+const wrap=document.getElementById('wrap');
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(34,1,.1,100);
+camera.position.set(0,1.35,10.8);
+const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.outputColorSpace=THREE.SRGBColorSpace;
+renderer.toneMapping=THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure=1.1;
+renderer.shadowMap.enabled=true;
+renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+wrap.appendChild(renderer.domElement);
+const controls=new OrbitControls(camera,renderer.domElement);
+controls.enableDamping=true;controls.enablePan=false;controls.target.set(0,1.15,0);controls.minDistance=8.5;controls.maxDistance=14;controls.minPolarAngle=.75;controls.maxPolarAngle=2.15;
+scene.add(new THREE.HemisphereLight(0xe9f7ff,0x182039,2.15));
+const key=new THREE.DirectionalLight(0xffffff,3.2);key.position.set(4,7,6);key.castShadow=true;scene.add(key);
+const fill=new THREE.PointLight(0x75caff,16,12);fill.position.set(-4,3.5,4);scene.add(fill);
+const warm=new THREE.PointLight(0xffd2c1,8,10);warm.position.set(3,1,3);scene.add(warm);
+
+const mat=(color,rough=.78,metal=0)=>new THREE.MeshStandardMaterial({color,roughness:rough,metalness:metal});
+const M={skin:mat(0xf1bd9d,.72),skin2:mat(0xe8a784,.76),hair:mat(0xf8fbff,.9),hairShade:mat(0xd9e4ee,.9),eye:mat(0x20202b,.5),iris:new THREE.MeshStandardMaterial({color:0x62c5ff,roughness:.4,emissive:0x0a2840,emissiveIntensity:.3}),white:mat(0xffffff,.7),robe:mat(0xf2f5fa,.84),gold:mat(0xe6bb56,.35,.4),mouth:mat(0x813f47,.62),sandal:mat(0xad7043,.8)};
+const sphere=(r,m,scale=[1,1,1])=>{const x=new THREE.Mesh(new THREE.SphereGeometry(r,48,32),m);x.scale.set(...scale);x.castShadow=true;x.receiveShadow=true;return x};
+const capsule=(r,len,m)=>{const x=new THREE.Mesh(new THREE.CapsuleGeometry(r,len,12,28),m);x.castShadow=true;return x};
+const cyl=(r1,r2,h,m)=>{const x=new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,48),m);x.castShadow=true;return x};
+
+const ground=new THREE.Mesh(new THREE.CircleGeometry(2.65,96),new THREE.MeshBasicMaterial({color:0x5eb8ff,transparent:true,opacity:.12}));ground.rotation.x=-Math.PI/2;ground.position.y=-1.23;scene.add(ground);
+const shadow=new THREE.Mesh(new THREE.CircleGeometry(1.45,96),new THREE.MeshBasicMaterial({color:0x000000,transparent:true,opacity:.18,depthWrite:false}));shadow.rotation.x=-Math.PI/2;shadow.position.set(0,-1.215,.1);shadow.scale.set(1.7,.55,1);scene.add(shadow);
+
+const configs={
+ cozy:{name:'Mysig Zeus',note:'Rund, mjuk och gullig med hela kroppen synlig.',head:1.0,body:1.0,eyes:1.05,beard:1.0},
+ mini:{name:'Mini Zeus',note:'Extra chibi: större huvud, större ögon och mindre kropp.',head:1.16,body:.84,eyes:1.14,beard:.9},
+ sage:{name:'Vise Zeus',note:'Lite lugnare form med längre, mjukt skägg.',head:.98,body:1.02,eyes:.97,beard:1.18}
+};
+let avatar=null,parts=null,currentModel='cozy',state='idle';
+
+function lightning(){const sh=new THREE.Shape();sh.moveTo(-.04,.68);sh.lineTo(-.27,.14);sh.lineTo(-.04,.16);sh.lineTo(-.24,-.62);sh.lineTo(.32,.08);sh.lineTo(.09,.08);sh.lineTo(.28,.68);sh.closePath();const mesh=new THREE.Mesh(new THREE.ShapeGeometry(sh),M.gold);mesh.scale.set(.38,.38,.38);return mesh}
+function puff(group,x,y,z,r,sx=1,sy=1,sz=1,material=M.hair){const p=sphere(r,material,[sx,sy,sz]);p.position.set(x,y,z);group.add(p);return p}
+
+function build(kind){
+ if(avatar)scene.remove(avatar);
+ const c=configs[kind];
+ const root=new THREE.Group();root.position.y=-.08;
+ const body=new THREE.Group();root.add(body);
+ const torso=sphere(.78*c.body,M.robe,[.82,.95,.66]);torso.position.y=.03;body.add(torso);
+ const belly=sphere(.62*c.body,M.robe,[.98,.8,.74]);belly.position.set(0,-.38*c.body,.05);body.add(belly);
+ const belt=cyl(.54*c.body,.56*c.body,.14,M.gold);belt.rotation.z=Math.PI/2;belt.rotation.y=Math.PI/2;belt.position.y=-.42*c.body;belt.scale.z=.58;body.add(belt);
+ const neck=capsule(.16,.10,M.skin);neck.position.y=.79*c.body;body.add(neck);
+
+ const headRig=new THREE.Group();headRig.position.y=1.48*c.body;root.add(headRig);
+ const head=sphere(.96*c.head,M.skin,[1,.98,.92]);headRig.add(head);
+ for(const side of[-1,1]){const ear=sphere(.18*c.head,M.skin2,[.72,1,.82]);ear.position.set(side*.91*c.head,-.01,0);headRig.add(ear)}
+
+ const eyes=[];
+ for(const side of[-1,1]){
+   const eg=new THREE.Group();eg.position.set(side*.35*c.head,.13*c.head,.78*c.head);headRig.add(eg);
+   const white=sphere(.205*c.eyes,M.white,[1.03,1.12,.38]);eg.add(white);
+   const iris=sphere(.115*c.eyes,M.iris,[1,1,.27]);iris.position.z=.16;eg.add(iris);
+   const pupil=sphere(.055*c.eyes,M.eye,[1,1,.24]);pupil.position.z=.205;eg.add(pupil);
+   const shine=sphere(.025*c.eyes,M.white);shine.position.set(-.035,.045,.235);eg.add(shine);
+   eyes.push(eg);
+ }
+ const nose=sphere(.14*c.head,M.skin2,[.9,1.05,.92]);nose.position.set(0,-.03*c.head,.87*c.head);headRig.add(nose);
+ const mouth=sphere(.12,M.mouth,[1.12,.35,.22]);mouth.position.set(0,-.34*c.head,.84*c.head);headRig.add(mouth);
+
+ // fluffy moustache
+ puff(headRig,-.17*c.head,-.24*c.head,.87*c.head,.22*c.head,1.25,.45,.38);
+ puff(headRig,.17*c.head,-.24*c.head,.87*c.head,.22*c.head,1.25,.45,.38);
+
+ // softer hair: larger overlapping puffs
+ const hair=new THREE.Group();headRig.add(hair);
+ [
+ [-.66,.58,.18,.35,1.1,.9,.85],[-.38,.80,.12,.37,1.05,.92,.85],[-.05,.90,.10,.39,1,.95,.85],
+ [.30,.84,.12,.37,1.05,.92,.85],[.60,.64,.18,.35,1.1,.9,.85],[-.80,.31,.09,.31,1,.95,.82],[.79,.34,.08,.31,1,.95,.82]
+ ].forEach(p=>puff(hair,p[0]*c.head,p[1]*c.head,p[2]*c.head,p[3]*c.head,p[4],p[5],p[6]));
+
+ const beard=new THREE.Group();beard.scale.y=c.beard;headRig.add(beard);
+ [
+ [-.42,-.42,.58,.30,1.12,.95,.78],[-.18,-.55,.66,.31,1.08,1,.78],[.08,-.57,.68,.31,1.08,1,.78],[.34,-.45,.60,.30,1.12,.95,.78],
+ [-.31,-.72,.49,.30,1.0,1.05,.76],[-.05,-.82,.52,.31,1.0,1.08,.76],[.22,-.76,.50,.30,1.0,1.05,.76],[0,-1.02,.44,.29,.92,1.18,.72]
+ ].forEach(p=>puff(beard,p[0]*c.head,p[1]*c.head,p[2]*c.head,p[3],p[4],p[5],p[6]));
+
+ function arm(side){
+   const rig=new THREE.Group();rig.position.set(side*.69*c.body,.31*c.body,.02);body.add(rig);
+   const upper=capsule(.145*c.body,.38*c.body,M.skin);upper.position.y=-.24*c.body;rig.add(upper);
+   const hand=sphere(.18*c.body,M.skin,[.92,1,.88]);hand.position.y=-.57*c.body;rig.add(hand);
+   return rig;
+ }
+ const left=arm(-1),right=arm(1);
+ for(const side of[-1,1]){
+   const leg=capsule(.12*c.body,.28*c.body,M.skin);leg.position.set(side*.27*c.body,-.85*c.body,0);body.add(leg);
+   const foot=sphere(.2*c.body,M.skin,[1.32,.58,1.55]);foot.position.set(side*.27*c.body,-1.13*c.body,.17);body.add(foot);
+   const sandal=sphere(.205*c.body,M.sandal,[1.33,.2,1.58]);sandal.position.set(side*.27*c.body,-1.12*c.body,.19);body.add(sandal);
+ }
+ const staff=new THREE.Group();staff.position.set(1.08*c.body,.44*c.body,0);body.add(staff);
+ const rod=cyl(.035,.035,1.72*c.body,M.gold);rod.position.y=-.38*c.body;staff.add(rod);
+ const bolt=lightning();bolt.position.y=.52*c.body;staff.add(bolt);
+
+ scene.add(root);avatar=root;parts={root,body,headRig,eyes,mouth,left,right,staff,beard};currentModel=kind;
+ document.getElementById('name').textContent=c.name;document.getElementById('note').textContent=c.note;
+ document.querySelectorAll('.pick').forEach(el=>el.classList.toggle('active',el.dataset.model===kind));
+ controls.target.set(0,1.0,0);camera.position.set(0,1.35,10.8);controls.update();
+}
+
+const copy={idle:['Väntar','IDLE','Jag väntar på dig.'],listening:['Lyssnar','LISTENING','Jag hör dig. Fortsätt.'],thinking:['Tänker','THINKING','Hmm… låt mig fundera.'],speaking:['Pratar','SPEAKING','Här kommer mitt svar.']};
+function setState(next){state=next;const c=copy[next];document.getElementById('top').textContent=c[0];document.getElementById('label').textContent=c[1];document.getElementById('line').textContent=c[2];document.querySelectorAll('.states button').forEach(el=>el.classList.toggle('active',el.dataset.state===next));}
+
+document.querySelectorAll('.pick').forEach(el=>el.addEventListener('click',()=>build(el.dataset.model)));
+document.querySelectorAll('.states button').forEach(el=>el.addEventListener('click',()=>{stopDemo();setState(el.dataset.state)}));
+let demoTimer=null,demoIndex=0;const order=['idle','listening','thinking','speaking'];
+function stopDemo(){if(demoTimer)clearInterval(demoTimer);demoTimer=null;document.getElementById('demo').textContent='Starta demo';}
+document.getElementById('demo').addEventListener('click',()=>{if(demoTimer){stopDemo();return}document.getElementById('demo').textContent='Stoppa demo';demoIndex=0;setState(order[0]);demoTimer=setInterval(()=>{demoIndex=(demoIndex+1)%order.length;setState(order[demoIndex]);},2300)});
+
+function resize(){const w=wrap.clientWidth,h=wrap.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/Math.max(h,1);camera.updateProjectionMatrix()}
+window.addEventListener('resize',resize);
+let t0=performance.now();
+function animate(now){requestAnimationFrame(animate);resize();controls.update();if(!parts){renderer.render(scene,camera);return}const t=(now-t0)/1000;const breath=Math.sin(t*2.1)*.018;parts.body.scale.set(1,1+breath,1);parts.root.position.y=-.08+Math.sin(t*1.25)*.025;parts.headRig.rotation.z=Math.sin(t*.8)*.015;
+ // blinking
+ const blink=Math.max(0,1-Math.min(Math.abs((t%4.7)-.18)*18,1));parts.eyes.forEach(e=>e.scale.y=1-blink*.88);
+ // reset pose smoothly-ish
+ parts.left.rotation.z*=.84;parts.right.rotation.z*=.84;parts.left.rotation.x*=.84;parts.right.rotation.x*=.84;parts.headRig.rotation.x*=.84;parts.staff.rotation.z*=.84;parts.beard.rotation.z*=.84;parts.mouth.scale.y+=(1-parts.mouth.scale.y)*.28;
+ if(state==='listening'){parts.headRig.rotation.x=-.11+Math.sin(t*2)*.015;parts.root.rotation.y=Math.sin(t*1.6)*.035;parts.left.rotation.z=-.10;}
+ if(state==='thinking'){parts.headRig.rotation.z=-.055;parts.right.rotation.z=-1.02;parts.right.rotation.x=.25;parts.beard.rotation.z=Math.sin(t*2.2)*.015;}
+ if(state==='speaking'){parts.mouth.scale.y=.55+Math.abs(Math.sin(t*8))*1.25;parts.right.rotation.z=-.35+Math.sin(t*3.1)*.17;parts.left.rotation.z=.18+Math.sin(t*2.4)*.10;parts.headRig.rotation.z=Math.sin(t*3)*.025;parts.staff.rotation.z=Math.sin(t*2.7)*.025;}
+ renderer.render(scene,camera)}
+build('cozy');setState('idle');resize();requestAnimationFrame(animate);
+window.ZeusAvatar={setState,setModel:build,getState:()=>state,getModel:()=>currentModel};
+</script>
+</body>
+</html>
