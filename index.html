@@ -4,116 +4,27 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#07111f">
-<title>Zeus Companion — tydliga lägen</title>
+<title>Zeus Companion — 3D</title>
 <script src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
 <style>
-:root{--bg:#06101d;--panel:#0d1b30;--text:#f4f8ff;--muted:#9db2cb;--blue:#81d3ff;--blue2:#609bff;--line:rgba(255,255,255,.09);--ok:#55dda0;--gold:#efc56b}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text);background:radial-gradient(circle at 50% 0,#173d69,#07111e 55%,#040910)}body{padding:12px}.app{max-width:1180px;margin:auto}.top{display:flex;justify-content:space-between;gap:12px;align-items:center;margin:5px 0 14px}.brand{display:flex;gap:12px;align-items:center}.logo{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,#a5e4ff,#609bff);color:#07111e;font-size:26px;font-weight:900}h1{font-size:clamp(1.3rem,3vw,2rem);margin:0}.sub{color:var(--muted);font-size:.88rem}.status{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:999px;padding:9px 13px;background:#ffffff08;font-size:.85rem}.dot{width:9px;height:9px;border-radius:50%;background:var(--ok);box-shadow:0 0 16px var(--ok)}.layout{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:14px}.stage,.card{border:1px solid var(--line);background:linear-gradient(180deg,#112541f5,#07101df7);border-radius:25px}.stage{position:relative;min-height:735px;overflow:hidden}.head{position:absolute;left:20px;top:17px;z-index:5}.eyebrow{font-size:.68rem;letter-spacing:.14em;color:var(--blue);font-weight:800}.name{font-size:1.15rem;font-weight:800;margin-top:4px}.note{color:var(--muted);font-size:.82rem;margin-top:3px;max-width:570px}.viewer{position:absolute;inset:88px 16px 175px;border:1px solid var(--line);border-radius:23px;overflow:hidden;background:#050a12;transition:.35s;box-shadow:inset 0 0 80px rgba(112,201,255,.04)}iframe{width:100%;height:100%;border:0;display:block;background:#050a12;transition:.35s}.loading{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:4;padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:#07111ee8;color:#d8ecff;font-size:.8rem;pointer-events:none}.state-fx{position:absolute;inset:0;pointer-events:none;z-index:3}.thinking-dots{display:none;position:absolute;right:20px;top:18px;font-size:28px;letter-spacing:7px;color:white;text-shadow:0 0 22px #81d3ff}.state-caption{position:absolute;left:50%;bottom:15px;transform:translateX(-50%);z-index:4;border:1px solid var(--line);background:#07111ee8;padding:7px 12px;border-radius:999px;font-size:.74rem;color:#d9ebff;white-space:nowrap}.stage[data-state="listening"] .viewer{box-shadow:0 0 0 1px rgba(129,211,255,.65),0 0 55px rgba(79,173,255,.24),inset 0 0 90px rgba(129,211,255,.08)}.stage[data-state="listening"] iframe{transform:scale(1.035)}.stage[data-state="thinking"] .thinking-dots{display:block;animation:think 1s ease-in-out infinite alternate}.stage[data-state="thinking"] .viewer{box-shadow:0 0 0 1px rgba(239,197,107,.45),0 0 40px rgba(239,197,107,.13)}.stage[data-state="speaking"] .viewer{animation:speakGlow .55s ease-in-out infinite alternate}.stage[data-state="speaking"] iframe{animation:speakBounce .6s ease-in-out infinite alternate}.states{position:absolute;left:16px;right:16px;bottom:16px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.states button,.demo,.toggle{border:1px solid var(--line);border-radius:14px;background:#ffffff0a;color:var(--text);padding:10px;cursor:pointer}.states button.active{background:#5e9cff24;border-color:#81d3ff99;transform:translateY(-1px)}.states b{display:block;font-size:.83rem}.states small{color:var(--muted);font-size:.69rem}.side{display:flex;flex-direction:column;gap:13px}.card{padding:16px}.card h2{font-size:1rem;margin:0 0 5px}.card p{font-size:.83rem;line-height:1.45;color:var(--muted);margin:0 0 11px}.demo{width:100%;font-weight:800;color:#07111e;background:linear-gradient(135deg,#a5e4ff,#609bff)}.toggle{width:100%;display:flex;justify-content:space-between;align-items:center;margin-top:8px}.toggle strong{font-size:.86rem}.toggle .pill{font-size:.72rem;padding:4px 8px;border-radius:999px;background:rgba(85,221,160,.12);color:#8ff0bd;border:1px solid rgba(85,221,160,.24)}.toggle.off .pill{background:#ffffff0a;color:#9db2cb;border-color:var(--line)}.speech{margin-top:10px;border:1px solid var(--line);border-radius:12px;background:#06101d;padding:10px}.speech small{display:block;color:var(--blue);font-size:.66rem;font-weight:800;letter-spacing:.1em;margin-bottom:4px}.speech div{font-size:.84rem}.tech{font-size:.75rem;color:#8298b2;line-height:1.5}.tech b{color:#d8e8f7}.credit{font-size:.73rem;color:#7890aa;line-height:1.45}.credit a{color:#9dd5ff;text-decoration:none}.foot{text-align:center;color:#70859c;font-size:.74rem;padding:12px}.ready{color:#94efbd}.warn{color:#ffd58b}@keyframes think{from{transform:translateY(0);opacity:.45}to{transform:translateY(-8px);opacity:1}}@keyframes speakGlow{from{box-shadow:0 0 0 1px rgba(129,211,255,.4),0 0 18px rgba(96,155,255,.15)}to{box-shadow:0 0 0 1px rgba(129,211,255,.85),0 0 55px rgba(96,155,255,.35)}}@keyframes speakBounce{from{transform:scale(1.01)}to{transform:scale(1.035)}}@media(max-width:900px){.layout{grid-template-columns:1fr}.side{display:grid;grid-template-columns:1fr 1fr}}@media(max-width:620px){body{padding:8px}.side{grid-template-columns:1fr}.stage{min-height:710px}.viewer{inset:112px 8px 192px}.states{grid-template-columns:repeat(2,1fr);left:8px;right:8px}.head{left:15px}.note{max-width:285px}}
-</style>
-</head>
-<body>
-<div class="app">
-<div class="top"><div class="brand"><div class="logo">ϟ</div><div><h1>Zeus Companion — tydliga lägen</h1><div class="sub">Varje knapp ger nu en tydligt synlig förändring.</div></div></div><div class="status"><span class="dot"></span><span id="topStatus">Laddar</span></div></div>
-<div class="layout">
-<section class="stage" id="stage" data-state="idle">
-<div class="head"><div class="eyebrow">ZEUS IDLE</div><div class="name">Zeus Companion</div><div class="note">Modellen har bara ett animationsklipp, så jag använder det på olika sätt för varje läge och förstärker skillnaden visuellt.</div></div>
-<div class="viewer"><div class="loading" id="loading">Laddar Zeus + animation…</div><iframe id="api-frame" title="Zeus Idle" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen></iframe><div class="state-fx"><div class="thinking-dots">•••</div><div class="state-caption" id="stateCaption">Idle · normal loop</div></div></div>
-<div class="states">
-<button class="active" data-state="idle">😌<b>Idle</b><small>normal loop</small></button>
-<button data-state="listening">👂<b>Lyssnar</b><small>alert + närmare</small></button>
-<button data-state="thinking">🤔<b>Tänker</b><small>fryst pose</small></button>
-<button data-state="speaking">🗣️<b>Pratar</b><small>snabb + puls</small></button>
-</div>
-</section>
-<aside class="side">
-<div class="card"><h2>Nu ska knapparna synas</h2><p><b>Lyssnar</b> zoomar in och kör rörelsen långsammare. <b>Tänker</b> hoppar till en pose och fryser där. <b>Pratar</b> kör animationen snabbare och pulserar tydligt.</p><div class="tech" id="animInfo">Animation: <b>kontrolleras…</b></div></div>
-<div class="card"><h2>Vitt hår</h2><p>HairMat används för hår, skägg, mustasch och ögonbryn och färgas vitt i viewern.</p><button class="toggle" id="hairToggle"><strong>Vitt Zeus-hår</strong><span class="pill">PÅ</span></button><div class="tech" id="hairInfo">Material: <b>kontrolleras…</b></div></div>
-<div class="card"><h2>Testa Zeus</h2><button class="demo" id="demo">Starta lägesdemo</button><div class="speech"><small id="label">IDLE</small><div id="line">Jag väntar på dig.</div></div></div>
-<div class="card"><div class="credit">Modell: <b>Zeus Idle</b> av SomeDude / Patyot.Suttipreecha · CC Attribution.<br><a href="https://sketchfab.com/3d-models/zeus-idle-ed4308bda4604effb798d107c910ce37" target="_blank" rel="noopener">Original på Sketchfab ↗</a></div></div>
-</aside>
-</div><div class="foot">Sketchfab Viewer API · Zeus Avatar prototype</div></div>
+:root{--text:#f4f8ff;--muted:#9db2cb;--blue:#81d3ff;--line:rgba(255,255,255,.09);--ok:#55dda0}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text);background:radial-gradient(circle at 50% 0,#173d69,#07111e 55%,#040910)}body{padding:10px}.app{max-width:1180px;margin:auto}.top{display:flex;justify-content:space-between;gap:12px;align-items:center;margin:5px 0 14px}.brand{display:flex;gap:12px;align-items:center}.logo{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,#a5e4ff,#609bff);color:#07111e;font-size:26px;font-weight:900}h1{font-size:clamp(1.25rem,3vw,2rem);margin:0}.sub{color:var(--muted);font-size:.87rem}.status{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:999px;padding:9px 13px;background:#ffffff08;font-size:.83rem}.dot{width:9px;height:9px;border-radius:50%;background:var(--ok);box-shadow:0 0 16px var(--ok)}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:14px}.stage,.card{border:1px solid var(--line);background:linear-gradient(180deg,#112541f5,#07101df7);border-radius:25px}.stage{position:relative;min-height:730px;overflow:hidden}.head{position:absolute;left:20px;top:17px;z-index:5}.eyebrow{font-size:.68rem;letter-spacing:.14em;color:var(--blue);font-weight:800}.name{font-size:1.15rem;font-weight:800;margin-top:4px}.note{color:var(--muted);font-size:.82rem;margin-top:3px;max-width:570px}.viewer{position:absolute;inset:88px 16px 175px;border:1px solid var(--line);border-radius:23px;overflow:hidden;background:radial-gradient(circle at 50% 42%,#173d69,#050a12 72%);box-shadow:inset 0 0 80px rgba(112,201,255,.05);transition:.3s}.viewer iframe{width:100%;height:100%;border:0;display:block}.loading{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:4;padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:#07111ee8;color:#d8ecff;font-size:.8rem;pointer-events:none}.caption{position:absolute;left:50%;bottom:13px;transform:translateX(-50%);z-index:4;border:1px solid var(--line);background:#07111ee8;padding:7px 11px;border-radius:999px;font-size:.72rem;white-space:nowrap}.stage[data-state="listening"] .viewer{box-shadow:0 0 0 1px rgba(129,211,255,.6),0 0 55px rgba(96,155,255,.22)}.stage[data-state="thinking"] .viewer{box-shadow:0 0 0 1px rgba(239,197,107,.45),0 0 45px rgba(239,197,107,.13)}.stage[data-state="speaking"] .viewer{animation:pulse .6s ease-in-out infinite alternate}@keyframes pulse{to{box-shadow:0 0 0 1px rgba(129,211,255,.9),0 0 58px rgba(96,155,255,.35)}}
+.states{position:absolute;left:16px;right:16px;bottom:16px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.states button,.action{border:1px solid var(--line);border-radius:14px;background:#ffffff0a;color:var(--text);padding:10px;cursor:pointer}.states button.active{background:#5e9cff24;border-color:#81d3ff99}.states b{display:block;font-size:.83rem}.states small{color:var(--muted);font-size:.69rem}.side{display:flex;flex-direction:column;gap:13px}.card{padding:16px}.card h2{font-size:1rem;margin:0 0 5px}.card p{font-size:.83rem;line-height:1.47;color:var(--muted);margin:0 0 11px}.action{width:100%;font-weight:800;background:linear-gradient(135deg,#a5e4ff,#609bff);color:#07111e}.tech{font-size:.74rem;color:#8298b2;line-height:1.5}.tech b{color:#d8e8f7}.pill{display:inline-block;padding:4px 8px;border-radius:999px;background:rgba(85,221,160,.1);color:#94efbd;border:1px solid rgba(85,221,160,.22);font-size:.68rem}.credit{font-size:.72rem;color:#7890aa;line-height:1.45}.credit a{color:#9dd5ff}.foot{text-align:center;color:#70859c;font-size:.73rem;padding:12px}@media(max-width:900px){.layout{grid-template-columns:1fr}.side{display:grid;grid-template-columns:1fr 1fr}}@media(max-width:620px){body{padding:8px}.side{grid-template-columns:1fr}.stage{min-height:710px}.viewer{inset:112px 8px 190px}.states{grid-template-columns:repeat(2,1fr);left:8px;right:8px}.head{left:15px}.note{max-width:285px}}
+</style></head>
+<body><div class="app">
+<div class="top"><div class="brand"><div class="logo">ϟ</div><div><h1>Zeus Companion — 3D</h1><div class="sub">Egen startvy, mörk bakgrund och vitt hår.</div></div></div><div class="status"><span class="dot"></span><span id="topStatus">Laddar</span></div></div>
+<div class="layout"><section class="stage" id="stage" data-state="idle"><div class="head"><div class="eyebrow">ZEUS 3D</div><div class="name">Zeus Companion</div><div class="note">Startzoomen är avstängd. Kameran centreras direkt på Zeus och bakgrunden sätts av vår sida.</div></div><div class="viewer"><div class="loading" id="loading">Laddar Zeus…</div><iframe id="api-frame" title="Zeus 3D" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen></iframe><div class="caption" id="caption">Idle · originalanimation</div></div><div class="states"><button class="active" data-state="idle">😌<b>Idle</b><small>original loop</small></button><button data-state="listening">👂<b>Lyssnar</b><small>närmare kamera</small></button><button data-state="thinking">🤔<b>Tänker</b><small>fryst pose</small></button><button data-state="speaking">🗣️<b>Pratar</b><small>snabb + puls</small></button></div></section>
+<aside class="side"><div class="card"><h2>Bakgrunden är fixad</h2><p>Sketchfabs gamla startanimation är avstängd med <b>camera: 0</b>. Viewern får en mörk blå Zeus-bakgrund direkt när modellen är klar.</p><span class="pill">STARTZOOM AV</span></div><div class="card"><h2>Vitt hår</h2><p>HairMat används av hår, skägg, mustasch och ögonbryn och tvingas till vitt.</p><div class="tech" id="hairInfo">HairMat: <b>laddar…</b></div></div><div class="card"><h2>Om rörelserna</h2><p>Din GLB innehåller bara ett riktigt animationsklipp. Därför kan den ännu inte ha fyra helt olika kroppsanimeringar. Här gör jag lägena tydligare med pose, hastighet och kamera.</p><div class="tech" id="animInfo">Animation: <b>laddar…</b></div><button class="action" id="reset">Återställ kamera</button></div><div class="card"><div class="credit">Zeus Idle av SomeDude / Patyot.Suttipreecha · CC Attribution.<br><a href="https://sketchfab.com/3d-models/zeus-idle-ed4308bda4604effb798d107c910ce37" target="_blank" rel="noopener">Original på Sketchfab ↗</a></div></div></aside></div><div class="foot">3D · Sketchfab Viewer API · Zeus Avatar</div></div>
 <script>
-const UID='ed4308bda4604effb798d107c910ce37';
-const iframe=document.getElementById('api-frame');
-const client=new Sketchfab('1.12.1',iframe);
-const stage=document.getElementById('stage');
-const loading=document.getElementById('loading');
-const topStatus=document.getElementById('topStatus');
-const animInfo=document.getElementById('animInfo');
-const hairInfo=document.getElementById('hairInfo');
-const hairToggle=document.getElementById('hairToggle');
-const label=document.getElementById('label');
-const line=document.getElementById('line');
-const stateCaption=document.getElementById('stateCaption');
-const buttons=[...document.querySelectorAll('.states button')];
-const demo=document.getElementById('demo');
-const copy={
- idle:['Väntar','IDLE','Jag väntar på dig.','Idle · normal loop'],
- listening:['Lyssnar','LISTENING','Jag hör dig. Fortsätt.','Lyssnar · långsammare + närmare'],
- thinking:['Tänker','THINKING','Hmm… låt mig fundera.','Tänker · fryst pose'],
- speaking:['Pratar','SPEAKING','Här kommer mitt svar.','Pratar · snabb animation + puls']
-};
-let api=null,animationUID=null,animationDuration=1.6,hairMaterial=null,originalHair=null,whiteHair=true,state='idle',timer=null,index=0;
-const order=['idle','listening','thinking','speaking'];
-
-function setAnimMode(s){
- if(!api||!animationUID)return;
- if(s==='idle'){
-   api.setCycleMode('loopOne');api.setSpeed(.78);api.play();
- }else if(s==='listening'){
-   api.setCycleMode('loopOne');api.setSpeed(.42);api.seekTo(Math.min(.18,animationDuration*.12),()=>api.play());
- }else if(s==='thinking'){
-   api.pause();api.seekTo(Math.min(animationDuration*.58,Math.max(.35,animationDuration-.2)),()=>api.pause());
- }else if(s==='speaking'){
-   api.setCycleMode('loopOne');api.setSpeed(1.55);api.seekTo(0,()=>api.play());
- }
-}
-
-function applyState(s){
- state=s;const c=copy[s];stage.dataset.state=s;topStatus.textContent=c[0];label.textContent=c[1];line.textContent=c[2];stateCaption.textContent=c[3];buttons.forEach(b=>b.classList.toggle('active',b.dataset.state===s));setAnimMode(s);
-}
-
-function makeHairWhite(on){
- if(!api||!hairMaterial)return;
- if(on){
-   const m=JSON.parse(JSON.stringify(hairMaterial));
-   for(const key of ['AlbedoPBR','DiffusePBR','DiffuseColor']){
-     if(m.channels&&m.channels[key]){m.channels[key].enable=true;m.channels[key].color=[1,1,1];m.channels[key].texture=null;}
-   }
-   api.setMaterial(m,()=>{hairInfo.innerHTML='Material: <b class="ready">HairMat → vitt</b>';});
- }else if(originalHair){api.setMaterial(JSON.parse(JSON.stringify(originalHair)),()=>{hairInfo.innerHTML='Material: <b>originalfärg</b>';});}
- hairToggle.classList.toggle('off',!on);hairToggle.querySelector('.pill').textContent=on?'PÅ':'AV';
-}
-
-function stopDemo(){if(timer)clearInterval(timer);timer=null;demo.dataset.running='0';demo.textContent='Starta lägesdemo';}
-function startDemo(){stopDemo();demo.dataset.running='1';demo.textContent='Stoppa demo';index=0;applyState(order[index]);timer=setInterval(()=>{index=(index+1)%order.length;applyState(order[index]);},3000);}
-buttons.forEach(b=>b.addEventListener('click',()=>{stopDemo();applyState(b.dataset.state);}));
-demo.addEventListener('click',()=>demo.dataset.running==='1'?stopDemo():startDemo());
-hairToggle.addEventListener('click',()=>{whiteHair=!whiteHair;makeHairWhite(whiteHair);});
-
-client.init(UID,{
- autostart:1,preload:1,transparent:0,ui_controls:1,ui_infos:0,ui_help:0,ui_settings:0,ui_inspector:0,ui_vr:0,ui_ar:0,ui_watermark:1,animation_autoplay:1,
- success:function(_api){
-   api=_api;api.start(()=>{});
-   api.addEventListener('viewerready',()=>{
-     loading.style.display='none';topStatus.textContent='Väntar';
-     api.getAnimations((err,anims)=>{
-       if(!err&&anims&&anims.length){
-         animationUID=anims[0][0];animationDuration=Number(anims[0][2]||1.6);
-         api.setCurrentAnimationByUID(animationUID,()=>{api.setCycleMode('loopOne');applyState('idle');});
-         animInfo.innerHTML='Animation: <b class="ready">'+(anims[0][1]||'Idle')+'</b> · '+animationDuration.toFixed(1)+' s · 1 klipp';
-       }else animInfo.innerHTML='Animation: <b class="warn">ingen hittad via API</b>';
-     });
-     api.getMaterialList((err,mats)=>{
-       if(err||!mats){hairInfo.innerHTML='Material: <b class="warn">kunde inte läsas</b>';return;}
-       hairMaterial=mats.find(m=>String(m.name||'').toLowerCase().includes('hair'))||null;
-       if(hairMaterial){originalHair=JSON.parse(JSON.stringify(hairMaterial));hairInfo.innerHTML='Material: <b class="ready">'+hairMaterial.name+' hittad</b>';makeHairWhite(true);}else hairInfo.innerHTML='Material: <b class="warn">HairMat hittades inte</b>';
-     });
-   });
- },
- error:function(){loading.textContent='Kunde inte ladda Sketchfab-viewern';topStatus.textContent='Fel';}
-});
-window.ZeusAvatar={setState:applyState,setWhiteHair:(v)=>{whiteHair=!!v;makeHairWhite(whiteHair);}};
-</script>
-</body>
-</html>
+const UID='ed4308bda4604effb798d107c910ce37',iframe=document.getElementById('api-frame'),client=new Sketchfab('1.12.1',iframe),stage=document.getElementById('stage'),loading=document.getElementById('loading'),topStatus=document.getElementById('topStatus'),caption=document.getElementById('caption'),animInfo=document.getElementById('animInfo'),hairInfo=document.getElementById('hairInfo'),buttons=[...document.querySelectorAll('.states button')];
+let api=null,animUID=null,duration=1.6,baseCamera=null,state='idle';
+const text={idle:['Väntar','Idle · originalanimation'],listening:['Lyssnar','Lyssnar · närmare och lugnare'],thinking:['Tänker','Tänker · fryst pose + sidokamera'],speaking:['Pratar','Pratar · snabbare + puls']};
+function cameraFor(s){if(!api||!baseCamera)return;const p=baseCamera.position,t=baseCamera.target,dx=p[0]-t[0],dy=p[1]-t[1],dz=p[2]-t[2],dist=Math.hypot(dx,dy,dz),scale=s==='listening'?.84:s==='speaking'?.91:1;let pos=[t[0]+dx*scale,t[1]+dy*scale,t[2]+dz*scale],tar=[...t];if(s==='thinking'){pos=[p[0]+dist*.10,p[1]+dist*.015,p[2]];tar=[t[0],t[1]+dist*.02,t[2]]}api.setCameraLookAt(pos,tar,.35);}
+function animFor(s){if(!api||!animUID)return;if(s==='idle'){api.setCycleMode('loopOne');api.setSpeed(.78);api.play()}else if(s==='listening'){api.setCycleMode('loopOne');api.setSpeed(.42);api.play()}else if(s==='thinking'){api.pause();api.seekTo(Math.min(duration*.58,Math.max(.3,duration-.15)),()=>api.pause())}else{api.setCycleMode('loopOne');api.setSpeed(1.55);api.seekTo(0,()=>api.play())}}
+function setState(s){state=s;stage.dataset.state=s;topStatus.textContent=text[s][0];caption.textContent=text[s][1];buttons.forEach(b=>b.classList.toggle('active',b.dataset.state===s));animFor(s);cameraFor(s)}
+function whiteHair(){api.getMaterialList((err,mats)=>{if(err||!mats){hairInfo.innerHTML='HairMat: <b>kunde inte läsas</b>';return}const hair=mats.find(m=>String(m.name||'').toLowerCase().includes('hair'));if(!hair){hairInfo.innerHTML='HairMat: <b>hittades inte</b>';return}const m=JSON.parse(JSON.stringify(hair));for(const k of ['AlbedoPBR','DiffusePBR','DiffuseColor'])if(m.channels&&m.channels[k]){m.channels[k].enable=true;m.channels[k].color=[1,1,1];m.channels[k].texture=null}api.setMaterial(m,()=>hairInfo.innerHTML='HairMat: <b>vitt ✓</b>')})}
+buttons.forEach(b=>b.addEventListener('click',()=>setState(b.dataset.state)));document.getElementById('reset').addEventListener('click',()=>{if(api){api.recenterCamera(()=>api.getCameraLookAt((e,c)=>{if(!e){baseCamera=c;setState(state)}}))}});
+client.init(UID,{autostart:1,preload:1,camera:0,dnt:1,ui_controls:1,ui_infos:0,ui_help:0,ui_settings:0,ui_inspector:0,ui_vr:0,ui_ar:0,ui_watermark:1,animation_autoplay:1,success:_api=>{api=_api;api.start();api.addEventListener('viewerready',()=>{loading.style.display='none';api.setBackground({color:[.018,.045,.085]});api.setEnableCameraConstraints(false);api.recenterCamera(()=>api.getCameraLookAt((err,c)=>{if(!err){baseCamera=c;cameraFor('idle')}}));api.getAnimations((err,a)=>{if(!err&&a&&a.length){animUID=a[0][0];duration=Number(a[0][2]||1.6);api.setCurrentAnimationByUID(animUID,()=>{api.setCycleMode('loopOne');setState('idle')});animInfo.innerHTML='Animation: <b>'+(a[0][1]||'Idle')+'</b> · '+duration.toFixed(1)+' s · 1 klipp'}else animInfo.innerHTML='Animation: <b>ingen hittad</b>'});whiteHair()})},error:()=>{loading.textContent='Kunde inte ladda Zeus';topStatus.textContent='Fel'}});
+window.ZeusAvatar={setState};
+</script></body></html>
