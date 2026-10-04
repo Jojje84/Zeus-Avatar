@@ -23,65 +23,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Build and verify Zeus model
-        shell: bash
-        run: |
-          set -euo pipefail
-          rm -rf _site
-          mkdir -p _site/assets
-          cp index.html _site/index.html
-          touch _site/.nojekyll
-          python3 - <<'PY'
-          import base64, gzip, json, struct
-          from pathlib import Path
-
-          parts = []
-          for i in range(8):
-              p = Path(f"assets/zeus-bin/part{i:02d}.b64")
-              if not p.exists():
-                  raise SystemExit(f"Missing {p}")
-              parts.append(p.read_text(encoding="utf-8").strip())
-
-          packed = base64.b64decode("".join(parts), validate=True)
-          glb = gzip.decompress(packed)
-          if glb[:4] != b"glTF":
-              raise SystemExit("Decoded file is not a GLB")
-          magic, version, declared = struct.unpack_from("<4sII", glb, 0)
-          if version != 2 or declared != len(glb):
-              raise SystemExit(f"Bad GLB header: version={version} declared={declared} actual={len(glb)}")
-
-          off = 12
-          doc = None
-          while off < len(glb):
-              chunk_len, chunk_type = struct.unpack_from("<II", glb, off)
-              off += 8
-              chunk = glb[off:off+chunk_len]
-              off += chunk_len
-              if chunk_type == 0x4E4F534A:
-                  doc = json.loads(chunk.decode("utf-8").rstrip("\x00 "))
-          if doc is None:
-              raise SystemExit("GLB has no JSON chunk")
-          if not doc.get("meshes") or not doc.get("nodes"):
-              raise SystemExit("GLB has no visible model data")
-          print("ZEUS_GLB_BYTES=", len(glb))
-          print("ZEUS_MESHES=", len(doc.get("meshes", [])))
-          print("ZEUS_NODES=", len(doc.get("nodes", [])))
-          print("ZEUS_ANIMATIONS=", len(doc.get("animations", [])))
-          Path("_site/assets/zeus.glb").write_bytes(glb)
-          PY
-          test -s _site/assets/zeus.glb
-
       - name: Configure Pages
         uses: actions/configure-pages@v5
         with:
           enablement: true
-
       - name: Upload static site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "_site"
-
+          path: "."
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
