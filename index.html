@@ -3,183 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#06101d">
-<title>Zeus Companion</title>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<meta name="theme-color" content="#07111f">
+<title>Zeus Companion – minitest</title>
 <style>
-:root{--text:#f4f8ff;--muted:#9db2cb;--line:rgba(255,255,255,.12);--ok:#67e7aa}
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text);background:#020812}
-body{background:radial-gradient(circle at 50% 38%,#173f6d 0,#071524 45%,#020812 82%)}
-.app{position:relative;width:100%;height:100dvh;min-height:100vh;overflow:hidden}.viewer{position:absolute;inset:0;touch-action:none}.viewer canvas{display:block;width:100%;height:100%}
-.top{position:absolute;z-index:5;left:max(14px,env(safe-area-inset-left));right:max(14px,env(safe-area-inset-right));top:max(15px,env(safe-area-inset-top));display:flex;align-items:center;justify-content:space-between;pointer-events:none}.brand{display:flex;align-items:center;gap:11px}.logo{width:50px;height:50px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(145deg,#a7e8ff,#609bff);color:#07111e;font-size:29px;font-weight:900;box-shadow:0 12px 32px #0007}.title{font-size:clamp(1.18rem,5vw,1.65rem);font-weight:850;text-shadow:0 2px 14px #000}.status{border:1px solid var(--line);border-radius:999px;padding:8px 11px;background:#07111edb;font-size:.72rem;color:#a9bed4;backdrop-filter:blur(14px)}.status.ok{color:#9af0bf;border-color:#67e7aa55}.status.bad{color:#ffd08c;border-color:#ffd08c55}
-.loading{position:absolute;z-index:6;left:50%;top:50%;transform:translate(-50%,-50%);padding:10px 14px;border:1px solid var(--line);border-radius:999px;background:#07111ef0;color:#d9ecff;font-size:.8rem;max-width:82vw;text-align:center}.state-note{position:absolute;z-index:5;left:50%;bottom:101px;transform:translateX(-50%);padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:#07111ed7;color:#9db2cb;font-size:.71rem;white-space:nowrap;pointer-events:none}
-.controls{position:absolute;z-index:5;left:50%;bottom:max(18px,calc(env(safe-area-inset-bottom) + 12px));transform:translateX(-50%);display:flex;gap:5px;padding:7px;border:1px solid var(--line);border-radius:22px;background:#07111edc;backdrop-filter:blur(18px);box-shadow:0 18px 45px #0009}.controls button{border:1px solid var(--line);border-radius:15px;background:#ffffff08;color:var(--text);padding:10px 12px;font-size:.86rem;white-space:nowrap}.controls button.active{background:#61b5ff25;border-color:#81d3ffaa;box-shadow:inset 0 0 18px #5dafff15}.credit{position:absolute;z-index:4;left:max(12px,env(safe-area-inset-left));bottom:max(12px,env(safe-area-inset-bottom));font-size:.59rem;color:#6f8499;pointer-events:none}
-@media(max-width:560px){.logo{width:47px;height:47px}.title{font-size:1.22rem}.status{font-size:.66rem;padding:7px 9px}.controls{gap:4px;max-width:calc(100vw - 12px)}.controls button{font-size:.77rem;padding:9px 9px}.state-note{bottom:92px}.credit{display:none}}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#020812;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#fff}
+body{background:radial-gradient(circle at 50% 40%,#173f6d 0,#071524 46%,#020812 82%)}
+.app{position:relative;width:100%;height:100dvh;min-height:100vh;overflow:hidden}
+.viewer{position:absolute;inset:-7%;overflow:hidden}
+.viewer iframe{width:114%;height:114%;border:0;display:block;background:transparent}
+.top{position:absolute;z-index:5;left:14px;right:14px;top:max(14px,env(safe-area-inset-top));display:flex;justify-content:space-between;align-items:center;pointer-events:none}
+.brand{display:flex;align-items:center;gap:10px}.logo{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,#a7e8ff,#609bff);color:#07111e;font-size:28px;font-weight:900;box-shadow:0 12px 32px #0007}.title{font-size:1.2rem;font-weight:800;text-shadow:0 2px 14px #000}.tag{font-size:.72rem;padding:7px 10px;border-radius:999px;background:#07111edb;border:1px solid rgba(255,255,255,.12);color:#aee8ff}
+.note{position:absolute;z-index:5;left:50%;bottom:max(18px,calc(env(safe-area-inset-bottom) + 12px));transform:translateX(-50%);padding:8px 12px;border-radius:999px;background:#07111edb;border:1px solid rgba(255,255,255,.12);font-size:.76rem;color:#cfe8ff;white-space:nowrap;pointer-events:none}
 </style>
 </head>
 <body>
 <div class="app">
-  <div class="viewer" id="viewer"><canvas id="canvas"></canvas></div>
-  <div class="top"><div class="brand"><div class="logo">ϟ</div><div class="title">Zeus Companion</div></div><div class="status" id="status">Laddar Zeus…</div></div>
-  <div class="loading" id="loading">Hämtar den riktiga Zeus-modellen…</div>
-  <div class="state-note" id="stateNote">Idle · originalrörelse</div>
-  <div class="controls">
-    <button class="active" data-state="idle">😌 Idle</button>
-    <button data-state="listening">👂 Lyssnar</button>
-    <button data-state="thinking">🤔 Tänker</button>
-    <button data-state="speaking">🗣️ Pratar</button>
+  <div class="viewer">
+    <iframe title="Zeus 3D" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen src="https://sketchfab.com/models/ed4308bda4604effb798d107c910ce37/embed?autostart=1&preload=1&ui_controls=0&ui_infos=0&ui_help=0&ui_settings=0&ui_inspector=0&ui_vr=0&ui_ar=0&ui_watermark=0&ui_watermark_link=0&ui_hint=0&dnt=1"></iframe>
   </div>
-  <div class="credit">Zeus Idle · SomeDude / Patyot.Suttipreecha · CC Attribution</div>
+  <div class="top"><div class="brand"><div class="logo">ϟ</div><div class="title">Zeus Companion</div></div><div class="tag">MINITEST</div></div>
+  <div class="note">Bara Zeus synlig först · rörelser tar vi nästa steg</div>
 </div>
-<script>
-(function(){
-  const canvas=document.getElementById('canvas');
-  const viewer=document.getElementById('viewer');
-  const loading=document.getElementById('loading');
-  const status=document.getElementById('status');
-  const stateNote=document.getElementById('stateNote');
-  const buttons=[].slice.call(document.querySelectorAll('.controls button'));
-
-  if(!window.THREE || !THREE.GLTFLoader){
-    loading.textContent='3D-motorn kunde inte laddas';
-    status.textContent='3D-fel';status.className='status bad';return;
-  }
-
-  const renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true,powerPreference:'high-performance'});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
-  renderer.outputEncoding=THREE.sRGBEncoding;
-  renderer.toneMapping=THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure=1.12;
-  renderer.setClearColor(0x000000,0);
-
-  const scene=new THREE.Scene();
-  const camera=new THREE.PerspectiveCamera(28,1,.1,4000);
-  scene.add(new THREE.HemisphereLight(0xf2f8ff,0x14213a,2.2));
-  const key=new THREE.DirectionalLight(0xffffff,2.8);key.position.set(220,320,330);scene.add(key);
-  const fill=new THREE.DirectionalLight(0x74cfff,1.7);fill.position.set(-220,140,240);scene.add(fill);
-  const rim=new THREE.DirectionalLight(0xffd6bd,1.15);rim.position.set(180,120,-200);scene.add(rim);
-
-  const avatar=new THREE.Group();scene.add(avatar);
-  const floor=new THREE.Mesh(new THREE.CircleGeometry(92,64),new THREE.MeshBasicMaterial({color:0x5dbdff,transparent:true,opacity:.07,depthWrite:false}));
-  floor.rotation.x=-Math.PI/2;scene.add(floor);
-
-  let model=null,mixer=null,action=null,state='idle',userYaw=0,drag=false,lastX=0;
-  let modelSize=new THREE.Vector3(100,180,80);
-  const bones={},baseQ={};
-  const labels={idle:'Idle · originalrörelse',listening:'Lyssnar · egen huvud- och kroppsrörelse',thinking:'Tänker · egen tänkarpose',speaking:'Pratar · egna armgester'};
-
-  function resize(){
-    const r=viewer.getBoundingClientRect(),w=Math.max(1,r.width),h=Math.max(1,r.height);
-    renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();
-    if(model)placeCamera();
-  }
-  function placeCamera(){
-    const h=modelSize.y,w=modelSize.x;
-    const vf=THREE.MathUtils.degToRad(camera.fov);
-    const hf=2*Math.atan(Math.tan(vf/2)*camera.aspect);
-    const dv=(h*.5)/Math.tan(vf*.5);
-    const dh=(w*.5)/Math.tan(Math.max(.08,hf*.5));
-    const dist=Math.max(dv,dh)*1.02;
-    camera.position.set(0,h*.015,dist);
-    camera.lookAt(0,h*.01,0);
-    camera.near=Math.max(.1,dist/200);camera.far=dist*12;camera.updateProjectionMatrix();
-  }
-  window.addEventListener('resize',resize,{passive:true});
-
-  function rememberBase(){Object.keys(bones).forEach(function(n){baseQ[n]=bones[n].quaternion.clone();});}
-  function restoreBase(){Object.keys(bones).forEach(function(n){if(baseQ[n])bones[n].quaternion.copy(baseQ[n]);});}
-  function rot(name,x,y,z){
-    const b=bones[name],q=baseQ[name];if(!b||!q)return;
-    b.quaternion.copy(q).multiply(new THREE.Quaternion().setFromEuler(new THREE.Euler(x||0,y||0,z||0,'XYZ')));
-  }
-  function startIdle(){
-    restoreBase();
-    if(action){action.reset();action.enabled=true;action.paused=false;action.setLoop(THREE.LoopRepeat,Infinity);action.timeScale=.72;action.play();}
-    status.textContent='Idle ✓';status.className='status ok';
-  }
-  function setState(s){
-    state=s;stateNote.textContent=labels[s];buttons.forEach(function(b){b.classList.toggle('active',b.getAttribute('data-state')===s);});
-    if(!model)return;
-    if(s==='idle'){startIdle();return;}
-    if(action){action.stop();action.paused=true;}
-    restoreBase();
-    status.textContent=(s==='listening'?'Lyssnar':s==='thinking'?'Tänker':'Pratar')+' ✓';status.className='status ok';
-  }
-  buttons.forEach(function(b){b.addEventListener('click',function(){setState(b.getAttribute('data-state'));});});
-
-  function prepareModel(g){
-    model=g.scene;
-    const remove=[];
-    model.traverse(function(o){
-      if(String(o.name||'').toLowerCase().indexOf('plane')!==-1){remove.push(o);return;}
-      if(o.isBone)bones[o.name]=o;
-      if(o.isMesh && o.material){
-        const mats=Array.isArray(o.material)?o.material:[o.material];
-        mats.forEach(function(m){
-          if(String(m.name||'').toLowerCase().indexOf('hair')!==-1){
-            m.map=null;if(m.color)m.color.set(0xffffff);if('roughness' in m)m.roughness=.72;m.needsUpdate=true;
-          }
-        });
-      }
-    });
-    remove.forEach(function(o){if(o.parent)o.parent.remove(o);});
-    avatar.add(model);
-    model.updateMatrixWorld(true);
-    const box=new THREE.Box3().setFromObject(model);
-    const center=box.getCenter(new THREE.Vector3());
-    model.position.sub(center);
-    model.updateMatrixWorld(true);
-    const box2=new THREE.Box3().setFromObject(model);modelSize=box2.getSize(new THREE.Vector3());
-    floor.position.y=-modelSize.y*.505;floor.scale.setScalar(Math.max(1,modelSize.x/180));
-
-    if(g.animations && g.animations.length){
-      mixer=new THREE.AnimationMixer(model);action=mixer.clipAction(g.animations[0]);
-      action.reset().play();mixer.setTime(Math.min(.22,g.animations[0].duration*.25));rememberBase();action.stop();restoreBase();
-    }else{rememberBase();}
-
-    resize();placeCamera();loading.style.display='none';setState('idle');
-  }
-
-  const loader=new THREE.GLTFLoader();
-  loader.load('assets/zeus.glb?v=22',
-    function(g){try{prepareModel(g);}catch(e){console.error(e);loading.textContent='Zeus laddades men kunde inte visas';status.textContent='Visningsfel';status.className='status bad';}},
-    function(xhr){if(xhr.total){loading.textContent='Laddar Zeus '+Math.round(xhr.loaded/xhr.total*100)+' %';}},
-    function(err){console.error(err);loading.textContent='Kunde inte ladda Zeus-modellen';status.textContent='Modellfel';status.className='status bad';}
-  );
-
-  const clock=new THREE.Clock();
-  function animate(){
-    requestAnimationFrame(animate);
-    const dt=Math.min(clock.getDelta(),.05),t=performance.now()/1000;
-    avatar.rotation.y=userYaw;
-    if(model){
-      if(state==='idle'){if(mixer)mixer.update(dt);}
-      else if(state==='listening'){
-        restoreBase();const s=Math.sin(t*1.8),n=Math.sin(t*2.45);
-        rot('Spine_01',-.075+.012*s,0,0);rot('Chest_02',-.12+.018*s,0,0);rot('Head_03',-.08+.028*n,-.09+.04*Math.sin(t*.75),.09);
-        rot('Shoulder.R_017',-.10,.03,-.34);rot('Elbow.R_018',0,.05,-.58);
-      }else if(state==='thinking'){
-        restoreBase();
-        rot('Chest_02',-.035,.06,0);rot('Head_03',-.20+.015*Math.sin(t*.9),.14,.11);
-        rot('Shoulder.R_017',-.30,.12,-.72);rot('Elbow.R_018',-.08,.12,-1.08);rot('Wrist.R_019',0,.20,-.18);
-        rot('Shoulder.L_05',0,0,.07);
-      }else if(state==='speaking'){
-        restoreBase();const a=Math.sin(t*4.6),b=Math.sin(t*3.0+1.1);
-        rot('Spine_01',.018*b,.035*b,0);rot('Chest_02',.035*b,.05*a,0);rot('Head_03',.04*a,.085*b,.025*a);
-        rot('Shoulder.L_05',-.08,0,.26+.18*b);rot('Elbow.L_06',0,0,.38+.22*a);
-        rot('Shoulder.R_017',-.08,0,-.26-.18*b);rot('Elbow.R_018',0,0,-.38-.22*a);
-      }
-    }
-    renderer.render(scene,camera);
-  }
-  animate();resize();
-
-  viewer.addEventListener('pointerdown',function(e){drag=true;lastX=e.clientX;try{viewer.setPointerCapture(e.pointerId);}catch(_){};});
-  viewer.addEventListener('pointermove',function(e){if(!drag)return;userYaw+=(e.clientX-lastX)*.008;lastX=e.clientX;});
-  viewer.addEventListener('pointerup',function(){drag=false;});viewer.addEventListener('pointercancel',function(){drag=false;});
-  window.ZeusAvatar={setState:setState,reset:function(){userYaw=0;placeCamera();setState(state);}};
-})();
-</script>
 </body>
 </html>
