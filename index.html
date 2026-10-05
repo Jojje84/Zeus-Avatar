@@ -3,26 +3,104 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#07111f">
-<title>Zeus Companion – minitest</title>
+<meta name="theme-color" content="#050a12">
+<title>Zeus</title>
 <style>
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#020812;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#fff}
-body{background:radial-gradient(circle at 50% 40%,#173f6d 0,#071524 46%,#020812 82%)}
-.app{position:relative;width:100%;height:100dvh;min-height:100vh;overflow:hidden}
-.viewer{position:absolute;inset:-7%;overflow:hidden}
-.viewer iframe{width:114%;height:114%;border:0;display:block;background:transparent}
-.top{position:absolute;z-index:5;left:14px;right:14px;top:max(14px,env(safe-area-inset-top));display:flex;justify-content:space-between;align-items:center;pointer-events:none}
-.brand{display:flex;align-items:center;gap:10px}.logo{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,#a7e8ff,#609bff);color:#07111e;font-size:28px;font-weight:900;box-shadow:0 12px 32px #0007}.title{font-size:1.2rem;font-weight:800;text-shadow:0 2px 14px #000}.tag{font-size:.72rem;padding:7px 10px;border-radius:999px;background:#07111edb;border:1px solid rgba(255,255,255,.12);color:#aee8ff}
-.note{position:absolute;z-index:5;left:50%;bottom:max(18px,calc(env(safe-area-inset-bottom) + 12px));transform:translateX(-50%);padding:8px 12px;border-radius:999px;background:#07111edb;border:1px solid rgba(255,255,255,.12);font-size:.76rem;color:#cfe8ff;white-space:nowrap;pointer-events:none}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#050a12}
+#wrap{position:fixed;inset:0;overflow:hidden;background:radial-gradient(circle at 50% 42%,#17395f 0,#091522 48%,#050a12 82%)}
+#api-frame{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent;display:block}
+#loading{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;color:#d6eaff;font:600 13px system-ui,-apple-system,Segoe UI,sans-serif;background:#07111ed9;border:1px solid #ffffff20;border-radius:999px;padding:9px 13px;pointer-events:none}
 </style>
 </head>
 <body>
-<div class="app">
-  <div class="viewer">
-    <iframe title="Zeus 3D" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen src="https://sketchfab.com/models/ed4308bda4604effb798d107c910ce37/embed?autostart=1&preload=1&ui_controls=0&ui_infos=0&ui_help=0&ui_settings=0&ui_inspector=0&ui_vr=0&ui_ar=0&ui_watermark=0&ui_watermark_link=0&ui_hint=0&dnt=1"></iframe>
-  </div>
-  <div class="top"><div class="brand"><div class="logo">ϟ</div><div class="title">Zeus Companion</div></div><div class="tag">MINITEST</div></div>
-  <div class="note">Bara Zeus synlig först · rörelser tar vi nästa steg</div>
+<div id="wrap">
+  <iframe id="api-frame" title="Zeus" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen></iframe>
+  <div id="loading">Laddar bara Zeus…</div>
 </div>
+<script src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
+<script>
+const UID='ed4308bda4604effb798d107c910ce37';
+const frame=document.getElementById('api-frame');
+const loading=document.getElementById('loading');
+const client=new Sketchfab('1.12.1',frame);
+let api;
+
+function zoomOnZeus(){
+  api.setEnableCameraConstraints(false);
+  api.focusOnVisibleGeometries(function(){
+    setTimeout(function(){
+      api.getCameraLookAt(function(err,c){
+        if(err||!c){loading.style.display='none';return;}
+        const p=c.position,t=c.target;
+        const dx=p[0]-t[0],dy=p[1]-t[1],dz=p[2]-t[2];
+        const close=.62;
+        api.setCameraLookAt(
+          [t[0]+dx*close,t[1]+dy*close,t[2]+dz*close],
+          [t[0],t[1],t[2]],
+          0,
+          function(){loading.style.display='none';}
+        );
+      });
+    },180);
+  });
+}
+
+function removeEverythingAroundZeus(){
+  api.getNodeMap(function(err,map){
+    if(err||!map){zoomOnZeus();return;}
+    const toHide=[];
+    Object.values(map).forEach(function(n){
+      const name=String(n.name||'').toLowerCase();
+      if(name.includes('plane')||name.includes('background')||name.includes('ground')){
+        if(n.instanceID!=null)toHide.push(n.instanceID);
+      }
+    });
+    if(!toHide.length){zoomOnZeus();return;}
+    let left=toHide.length;
+    toHide.forEach(function(id){api.hide(id,function(){if(--left===0)zoomOnZeus();});});
+  });
+}
+
+function makeHairWhite(){
+  api.getMaterialList(function(err,mats){
+    if(err||!mats)return;
+    mats.forEach(function(m){
+      const name=String(m.name||'').toLowerCase();
+      if(!name.includes('hair'))return;
+      const x=JSON.parse(JSON.stringify(m));
+      ['AlbedoPBR','DiffusePBR','DiffuseColor'].forEach(function(k){
+        if(x.channels&&x.channels[k]){
+          x.channels[k].enable=true;
+          x.channels[k].color=[1,1,1];
+          x.channels[k].texture=null;
+        }
+      });
+      api.setMaterial(x);
+    });
+  });
+}
+
+client.init(UID,{
+  autostart:1,preload:1,transparent:1,camera:0,dnt:1,
+  ui_controls:0,ui_infos:0,ui_hint:0,ui_stop:0,ui_inspector:0,
+  ui_settings:0,ui_vr:0,ui_ar:0,ui_help:0,ui_watermark:0,ui_watermark_link:0,
+  animation_autoplay:1,
+  success:function(_api){
+    api=_api;api.start();
+    api.addEventListener('viewerready',function(){
+      makeHairWhite();
+      removeEverythingAroundZeus();
+      api.getAnimations(function(err,a){
+        if(!err&&a&&a.length){
+          api.setCurrentAnimationByUID(a[0][0],function(){
+            api.setCycleMode('loopOne');api.setSpeed(.85);api.play();
+          });
+        }
+      });
+    });
+  },
+  error:function(){loading.textContent='Kunde inte ladda Zeus';}
+});
+</script>
 </body>
 </html>
