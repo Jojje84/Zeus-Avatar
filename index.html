@@ -50,10 +50,10 @@ function lowerArms(){
     const byName={};
     Object.values(map).forEach(function(n){if(n&&n.name)byName[n.name]=n.instanceID;});
     const edits=[];
-    if(byName['Shoulder.L_05']!=null) edits.push([byName['Shoulder.L_05'],-0.42]);
-    if(byName['Elbow.L_06']!=null) edits.push([byName['Elbow.L_06'],-0.12]);
-    if(byName['Shoulder.R_017']!=null) edits.push([byName['Shoulder.R_017'],0.42]);
-    if(byName['Elbow.R_018']!=null) edits.push([byName['Elbow.R_018'],0.12]);
+    if(byName['Shoulder.L_05']!=null) edits.push([byName['Shoulder.L_05'],-0.72]);
+    if(byName['Elbow.L_06']!=null) edits.push([byName['Elbow.L_06'],-0.18]);
+    if(byName['Shoulder.R_017']!=null) edits.push([byName['Shoulder.R_017'],0.72]);
+    if(byName['Elbow.R_018']!=null) edits.push([byName['Elbow.R_018'],0.18]);
     if(!edits.length){loading.style.display='none';return;}
     let left=edits.length;
     edits.forEach(function(e){applyLocalZ(e[0],e[1],function(){if(--left===0)loading.style.display='none';});});
