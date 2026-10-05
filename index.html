@@ -15,7 +15,7 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#050a12}
 <body>
 <div id="wrap">
   <iframe id="api-frame" title="Zeus" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen></iframe>
-  <div id="loading">Laddar bara Zeus…</div>
+  <div id="loading">Laddar Zeus…</div>
 </div>
 <script src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
 <script>
@@ -24,6 +24,41 @@ const frame=document.getElementById('api-frame');
 const loading=document.getElementById('loading');
 const client=new Sketchfab('1.12.1',frame);
 let api;
+
+function mul(a,b){
+  const o=new Array(16);
+  for(let c=0;c<4;c++)for(let r=0;r<4;r++){
+    o[c*4+r]=0;
+    for(let k=0;k<4;k++)o[c*4+r]+=a[k*4+r]*b[c*4+k];
+  }
+  return o;
+}
+function rz(a){
+  const c=Math.cos(a),s=Math.sin(a);
+  return [c,s,0,0,-s,c,0,0,0,0,1,0,0,0,0,1];
+}
+function applyLocalZ(id,angle,done){
+  api.getMatrix(id,function(err,m){
+    if(err||!m){if(done)done();return;}
+    api.setMatrix(id,mul(m,rz(angle)),function(){if(done)done();});
+  });
+}
+
+function lowerArms(){
+  api.getNodeMap(function(err,map){
+    if(err||!map){loading.style.display='none';return;}
+    const byName={};
+    Object.values(map).forEach(function(n){if(n&&n.name)byName[n.name]=n.instanceID;});
+    const edits=[];
+    if(byName['Shoulder.L_05']!=null) edits.push([byName['Shoulder.L_05'],-0.42]);
+    if(byName['Elbow.L_06']!=null) edits.push([byName['Elbow.L_06'],-0.12]);
+    if(byName['Shoulder.R_017']!=null) edits.push([byName['Shoulder.R_017'],0.42]);
+    if(byName['Elbow.R_018']!=null) edits.push([byName['Elbow.R_018'],0.12]);
+    if(!edits.length){loading.style.display='none';return;}
+    let left=edits.length;
+    edits.forEach(function(e){applyLocalZ(e[0],e[1],function(){if(--left===0)loading.style.display='none';});});
+  });
+}
 
 function zoomOnZeus(){
   api.setEnableCameraConstraints(false);
@@ -38,7 +73,7 @@ function zoomOnZeus(){
           [t[0]+dx*close,t[1]+dy*close,t[2]+dz*close],
           [t[0],t[1],t[2]],
           0,
-          function(){loading.style.display='none';}
+          function(){}
         );
       });
     },180);
@@ -84,7 +119,7 @@ client.init(UID,{
   autostart:1,preload:1,transparent:1,camera:0,dnt:1,
   ui_controls:0,ui_infos:0,ui_hint:0,ui_stop:0,ui_inspector:0,
   ui_settings:0,ui_vr:0,ui_ar:0,ui_help:0,ui_watermark:0,ui_watermark_link:0,
-  animation_autoplay:1,
+  animation_autoplay:0,
   success:function(_api){
     api=_api;api.start();
     api.addEventListener('viewerready',function(){
@@ -93,8 +128,13 @@ client.init(UID,{
       api.getAnimations(function(err,a){
         if(!err&&a&&a.length){
           api.setCurrentAnimationByUID(a[0][0],function(){
-            api.setCycleMode('loopOne');api.setSpeed(.85);api.play();
+            api.seekTo(.25,function(){
+              api.pause();
+              setTimeout(lowerArms,120);
+            });
           });
+        }else{
+          lowerArms();
         }
       });
     });
